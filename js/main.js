@@ -1,6 +1,10 @@
 /* ============================================================
  *  main.js — Master initialisation for Hans's Golden Birthday
- *  Fetches data, populates every section, boots all modules.
+ *  Fetches data, populates EVERY piece of text, boots all modules.
+ *  
+ *  ALL text on the page comes from data/messages.json
+ *  ALL letter content comes from data/letter.txt
+ *  To edit ANY text, just edit those files — no code changes needed!
  * ============================================================ */
 
 document.addEventListener('DOMContentLoaded', async () => {
@@ -21,13 +25,14 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     /* ----------------------------------------------------------
      * 2.  POPULATE SECTIONS  (order mirrors the page flow)
+     *     Every single piece of text comes from messages.json
      * ---------------------------------------------------------- */
     populateHero(data.hero);
     populateBalloons(data.balloons);
     populateGallery(data.gallery);
     populateSlider(data.slider);
     populateWish(data.wish);
-    populateLetter(letterText);
+    populateLetter(data.letter, letterText);
     populateEnding(data.ending);
 
     /* ----------------------------------------------------------
@@ -54,37 +59,47 @@ document.addEventListener('DOMContentLoaded', async () => {
 
 /* ==============================================================
  *  POPULATE FUNCTIONS
+ *  Each function reads from messages.json and fills the page.
  * ============================================================== */
 
 /**
- * populateHero — fills the hero banner text.
- * @param {Object} hero  – { title: string, subtitle: string }
+ * populateHero — fills the hero banner text + badge.
+ * Editable keys in messages.json → hero.title, hero.subtitle, hero.badge
  */
 function populateHero(hero) {
   if (!hero) return;
 
   const titleEl    = document.querySelector('.hero-title');
+  const glowEl     = document.querySelector('.hero-title-glow');
   const subtitleEl = document.querySelector('.hero-subtitle');
+  const badgeEl    = document.querySelector('.hero-badge');
 
   if (titleEl)    titleEl.textContent    = hero.title    || '';
-  if (subtitleEl) subtitleEl.textContent = hero.subtitle || '';
+  if (glowEl)     glowEl.textContent     = hero.title    || '';
+  if (subtitleEl) subtitleEl.textContent  = hero.subtitle || '';
+  if (badgeEl)    badgeEl.textContent     = hero.badge    || '';
 }
 
 
 /**
- * populateBalloons — writes a secret message into each balloon.
- * @param {string[]} messages — array of messages, one per balloon
+ * populateBalloons — sets section heading + secret messages.
+ * Editable keys → balloons.heading, balloons.messages[]
  */
-function populateBalloons(messages) {
-  if (!messages || !Array.isArray(messages)) return;
+function populateBalloons(balloons) {
+  if (!balloons) return;
 
+  /* Section heading */
+  const headingEl = document.querySelector('#balloons .section-title');
+  if (headingEl && balloons.heading) headingEl.textContent = balloons.heading;
+
+  /* Balloon messages */
+  const messages = balloons.messages || [];
   const wrappers = document.querySelectorAll('.balloon-wrapper');
   wrappers.forEach((wrapper, i) => {
     const msgEl = wrapper.querySelector('.balloon-message');
     if (msgEl && messages[i] !== undefined) {
       msgEl.textContent = messages[i];
     }
-    /* Store the message as a data attribute too (handy for CSS tooltips) */
     if (messages[i] !== undefined) {
       wrapper.setAttribute('data-message', messages[i]);
     }
@@ -93,11 +108,15 @@ function populateBalloons(messages) {
 
 
 /**
- * populateGallery — dynamically builds gallery categories & images.
- * @param {Object} gallery – { categories: [{ name, images: [{ src, alt }] }] }
+ * populateGallery — sets section heading + builds photo grid.
+ * Editable keys → gallery.heading, gallery.categories[].name, .emoji, .images[]
  */
 function populateGallery(gallery) {
   if (!gallery || !gallery.categories) return;
+
+  /* Section heading */
+  const headingEl = document.querySelector('#gallery .section-title');
+  if (headingEl && gallery.heading) headingEl.textContent = gallery.heading;
 
   const container = document.querySelector('#gallery .gallery-grid')
                  || document.querySelector('#gallery');
@@ -111,7 +130,7 @@ function populateGallery(gallery) {
     /* --- Category title --- */
     const catTitle = document.createElement('h3');
     catTitle.classList.add('category-title');
-    catTitle.textContent = cat.name || 'Gallery';
+    catTitle.textContent = (cat.emoji ? cat.emoji + ' ' : '') + (cat.name || 'Gallery');
     catDiv.appendChild(catTitle);
 
     /* --- Image grid inside category --- */
@@ -120,7 +139,7 @@ function populateGallery(gallery) {
 
     (cat.images || []).forEach((img) => {
       const item = document.createElement('div');
-      item.classList.add('gallery-item', 'reveal');           // .reveal for scroll animation
+      item.classList.add('gallery-item', 'reveal');
 
       /* Support both string paths and { src, alt } objects */
       const imgSrc = (typeof img === 'string') ? img : (img.src || '');
@@ -129,11 +148,11 @@ function populateGallery(gallery) {
       const image = document.createElement('img');
       image.src      = imgSrc;
       image.alt      = imgAlt;
-      image.loading  = 'lazy';                                // native lazy-load
+      image.loading  = 'lazy';
 
       /* Fallback placeholder when the image can't load */
       image.onerror = function () {
-        this.style.display = 'none';                          // hide broken <img>
+        this.style.display = 'none';
         const placeholder = document.createElement('div');
         placeholder.classList.add('gallery-placeholder');
         placeholder.textContent = `${cat.emoji || ''} ${cat.name} 📷`;
@@ -151,16 +170,16 @@ function populateGallery(gallery) {
 
 
 /**
- * populateSlider — sets "then" & "now" images for the before/after slider.
- * @param {Object} slider – { title, thenImage, nowImage }
+ * populateSlider — sets heading, labels, and images.
+ * Editable keys → slider.heading, slider.thenLabel, slider.nowLabel,
+ *                  slider.thenImage, slider.nowImage
  */
 function populateSlider(slider) {
   if (!slider) return;
 
-  /* Title */
-  const titleEl = document.querySelector('#slider .section-title')
-               || document.querySelector('#slider h2');
-  if (titleEl && slider.title) titleEl.textContent = slider.title;
+  /* Section heading */
+  const headingEl = document.querySelector('#slider .section-title');
+  if (headingEl && slider.heading) headingEl.textContent = slider.heading;
 
   /* Labels */
   const thenLabel = document.querySelector('.slider-label.then-label');
@@ -171,9 +190,7 @@ function populateSlider(slider) {
   /* "Then" image */
   const thenImg = document.querySelector('.then-image img');
   if (thenImg) {
-    if (slider.thenImage) {
-      thenImg.src = slider.thenImage;
-    }
+    if (slider.thenImage) thenImg.src = slider.thenImage;
     thenImg.onerror = function () {
       this.style.display = 'none';
       const ph = document.createElement('div');
@@ -186,9 +203,7 @@ function populateSlider(slider) {
   /* "Now" image */
   const nowImg = document.querySelector('.now-image img');
   if (nowImg) {
-    if (slider.nowImage) {
-      nowImg.src = slider.nowImage;
-    }
+    if (slider.nowImage) nowImg.src = slider.nowImage;
     nowImg.onerror = function () {
       this.style.display = 'none';
       const ph = document.createElement('div');
@@ -201,50 +216,64 @@ function populateSlider(slider) {
 
 
 /**
- * populateWish — inserts the wish message text.
- * @param {Object} wish – { message: string }
+ * populateWish — sets heading, button text, and wish message.
+ * Editable keys → wish.heading, wish.buttonText, wish.message
  */
 function populateWish(wish) {
   if (!wish) return;
 
+  /* Section heading */
+  const headingEl = document.querySelector('#wish .section-title');
+  if (headingEl && wish.heading) headingEl.textContent = wish.heading;
+
+  /* Blow button text */
+  const btnEl = document.querySelector('.blow-btn');
+  if (btnEl && wish.buttonText) btnEl.textContent = wish.buttonText;
+
+  /* Wish message */
   const msgEl = document.querySelector('.wish-message');
-  if (msgEl && wish.message) {
-    msgEl.textContent = wish.message;
-  }
+  if (msgEl && wish.message) msgEl.textContent = wish.message;
 }
 
 
 /**
- * populateLetter — fills the personal-letter section.
- * @param {string} text — raw text from letter.txt
+ * populateLetter — sets heading, seal, and letter body.
+ * Editable keys → letter.heading, letter.seal (in messages.json)
+ *                  letter body text (in letter.txt)
  */
-function populateLetter(text) {
-  if (!text) return;
+function populateLetter(letterData, letterText) {
+  /* Section heading */
+  if (letterData) {
+    const headingEl = document.querySelector('#letter .section-title');
+    if (headingEl && letterData.heading) headingEl.textContent = letterData.heading;
 
-  const contentEl = document.querySelector('.letter-content');
-  if (contentEl) {
-    contentEl.textContent = text;
+    /* Wax seal emoji */
+    const sealEl = document.querySelector('.letter-seal');
+    if (sealEl && letterData.seal) sealEl.textContent = letterData.seal;
+  }
+
+  /* Letter body from letter.txt */
+  if (letterText) {
+    const contentEl = document.querySelector('.letter-content');
+    if (contentEl) contentEl.textContent = letterText;
   }
 }
 
 
 /**
- * populateEnding — sets the closing quote / farewell.
- * @param {Object} ending – { quote: string }
+ * populateEnding — sets quote, badge, and hearts.
+ * Editable keys → ending.quote, ending.badge, ending.hearts
  */
 function populateEnding(ending) {
   if (!ending) return;
 
-  const quoteEl = document.querySelector('.ending-quote');
-  if (quoteEl && ending.quote) {
-    quoteEl.textContent = ending.quote;
-  }
+  const quoteEl  = document.querySelector('.ending-quote');
+  const badgeEl  = document.querySelector('.ending-badge');
+  const heartsEl = document.querySelector('.ending-hearts');
 
-  /* Badge text (e.g. "✨ 19 on 19 ✨") */
-  const badgeEl = document.querySelector('.ending-badge');
-  if (badgeEl && ending.badge) {
-    badgeEl.textContent = ending.badge;
-  }
+  if (quoteEl  && ending.quote)  quoteEl.textContent  = ending.quote;
+  if (badgeEl  && ending.badge)  badgeEl.textContent   = ending.badge;
+  if (heartsEl && ending.hearts) heartsEl.textContent  = ending.hearts;
 }
 
 
@@ -264,10 +293,10 @@ function createLanterns() {
     lantern.classList.add('lantern');
 
     /* Randomised CSS custom properties for unique motion */
-    const duration = (Math.random() * 15 + 15).toFixed(1);         // 15 s – 30 s
-    const sway     = (Math.random() * 100 - 50).toFixed(0);        // -50 px – 50 px
-    const left     = (Math.random() * 100).toFixed(1);              // 0 % – 100 %
-    const delay    = (Math.random() * 10).toFixed(1);               // stagger start
+    const duration = (Math.random() * 15 + 15).toFixed(1);
+    const sway     = (Math.random() * 100 - 50).toFixed(0);
+    const left     = (Math.random() * 100).toFixed(1);
+    const delay    = (Math.random() * 10).toFixed(1);
 
     lantern.style.setProperty('--duration', `${duration}s`);
     lantern.style.setProperty('--sway', `${sway}px`);

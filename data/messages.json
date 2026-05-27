@@ -1,14 +1,19 @@
 {
   "hero": {
     "title": "HAPPY GOLDEN BIRTHDAY TO MY HANSSS 💛✨",
-    "subtitle": "My Twin Soul"
+    "subtitle": "My Twin Soul",
+    "badge": "✨ 19 on 19 ✨"
   },
-  "balloons": [
-    "Golden bday for my golden girl 💛✨",
-    "More adventures loading… 🌍💖",
-    "6th class us would be surprised 😭💛"
-  ],
+  "balloons": {
+    "heading": "Pop a Balloon 🎈",
+    "messages": [
+      "Golden bday for my golden girl 💛✨",
+      "More adventures loading… 🌍💖",
+      "6th class us would be surprised 😭💛"
+    ]
+  },
   "gallery": {
+    "heading": "Our Golden Memories 📸",
     "categories": [
       {
         "name": "Childhood Memories",
@@ -45,17 +50,24 @@
     ]
   },
   "slider": {
-    "title": "Then → Now 💛",
+    "heading": "Then → Now 💛",
     "thenLabel": "Then 📚",
     "nowLabel": "Now 🎓",
     "thenImage": "assets/images/then.jpg",
     "nowImage": "assets/images/now.jpg"
   },
   "wish": {
+    "heading": "Make a Golden Wish 🎂",
+    "buttonText": "✨ Blow the Candles ✨",
     "message": "Make a wish ✨ May all your golden dreams come true 💛"
+  },
+  "letter": {
+    "heading": "A Letter For You 💌",
+    "seal": "💛"
   },
   "ending": {
     "quote": "Forever agreement. No way back 🫂💖",
-    "badge": "✨ 19 on 19 ✨"
+    "badge": "✨ 19 on 19 ✨",
+    "hearts": "💛✨💛"
   }
 }

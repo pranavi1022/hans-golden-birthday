@@ -14,25 +14,33 @@ A premium interactive birthday website celebrating Hans's Golden Birthday — tu
 - 🌌 Starry sky with floating golden lanterns
 - 🎵 Background music toggle
 - 📱 Fully responsive design
-- 📝 All content editable without touching code
+- 📝 **ALL content editable** without touching code
 
 ## 📂 Project Structure
 
 ```
-hans bday/
+hans-golden-birthday/
 ├── index.html                  # Main HTML file
 ├── css/
-│   └── styles.css              # All styles
+│   ├── index.css               # Design system (colors, fonts, variables)
+│   ├── hero.css                # Hero section + music toggle
+│   ├── balloons.css            # Balloon pop interaction
+│   ├── gallery.css             # Memory photo gallery
+│   ├── slider.css              # Then vs Now comparison
+│   ├── wish.css                # Birthday cake + confetti
+│   ├── letter.css              # Handwritten letter card
+│   ├── ending.css              # Stars + lanterns finale
+│   └── animations.css          # Global animation utilities
 ├── js/
-│   ├── app.js                  # Main application logic
-│   ├── particles.js            # Golden particle effects
-│   ├── gallery.js              # Photo gallery logic
-│   ├── slider.js               # Then vs Now slider
-│   ├── cake.js                 # Birthday cake + candle
-│   ├── letter.js               # Letter section
-│   └── music.js                # Background music toggle
+│   ├── main.js                 # Master init + content loader
+│   ├── particles.js            # Hero gold particle canvas
+│   ├── balloons.js             # Balloon pop + burst effect
+│   ├── slider.js               # Before/after drag slider
+│   ├── wish.js                 # Candle blow + confetti
+│   ├── music.js                # Background music toggle
+│   └── animations.js           # Scroll-reveal + stars canvas
 ├── data/
-│   ├── messages.json           # ✏️ All editable text content
+│   ├── messages.json           # ✏️ ALL editable text content
 │   └── letter.txt              # ✏️ Your personal letter
 ├── assets/
 │   ├── images/
@@ -47,22 +55,38 @@ hans bday/
 └── README.md                   # This file
 ```
 
-## 🎨 How to Edit Content
+## ✏️ How to Edit Content
 
-### Changing Messages
+> **You NEVER need to touch any code!** Just edit `data/messages.json` and `data/letter.txt`.
 
-Edit `data/messages.json` to update:
+### Complete Editable Fields in `messages.json`
 
-| Section | What it controls |
-|---------|-----------------|
-| `hero.title` | Main birthday heading |
-| `hero.subtitle` | Subtitle under the heading |
-| `balloons` | Messages shown in floating balloons |
-| `gallery.categories` | Photo gallery categories & image paths |
-| `slider` | Then vs Now section labels & images |
-| `wish.message` | Birthday wish text |
-| `ending.quote` | Final closing quote |
-| `ending.badge` | Golden badge text |
+| JSON Key | What it controls | Example |
+|----------|-----------------|---------|
+| `hero.title` | Main birthday heading | `"HAPPY GOLDEN BIRTHDAY TO MY HANSSS 💛✨"` |
+| `hero.subtitle` | Subtitle under the heading | `"My Twin Soul"` |
+| `hero.badge` | Badge text below subtitle | `"✨ 19 on 19 ✨"` |
+| `balloons.heading` | Section heading for balloons | `"Pop a Balloon 🎈"` |
+| `balloons.messages[0]` | First balloon message | `"Golden bday for my golden girl 💛✨"` |
+| `balloons.messages[1]` | Second balloon message | `"More adventures loading… 🌍💖"` |
+| `balloons.messages[2]` | Third balloon message | `"6th class us would be surprised 😭💛"` |
+| `gallery.heading` | Section heading for gallery | `"Our Golden Memories 📸"` |
+| `gallery.categories[].name` | Category title | `"Childhood Memories"` |
+| `gallery.categories[].emoji` | Emoji before category title | `"👶"` |
+| `gallery.categories[].images[]` | Photo file paths | `"assets/images/childhood/1.jpg"` |
+| `slider.heading` | Section heading for slider | `"Then → Now 💛"` |
+| `slider.thenLabel` | Label on the "then" side | `"Then 📚"` |
+| `slider.nowLabel` | Label on the "now" side | `"Now 🎓"` |
+| `slider.thenImage` | Then photo path | `"assets/images/then.jpg"` |
+| `slider.nowImage` | Now photo path | `"assets/images/now.jpg"` |
+| `wish.heading` | Section heading for wish | `"Make a Golden Wish 🎂"` |
+| `wish.buttonText` | Blow candles button text | `"✨ Blow the Candles ✨"` |
+| `wish.message` | Birthday wish text | `"Make a wish ✨ May all your golden dreams come true 💛"` |
+| `letter.heading` | Section heading for letter | `"A Letter For You 💌"` |
+| `letter.seal` | Wax seal emoji | `"💛"` |
+| `ending.quote` | Final closing quote | `"Forever agreement. No way back 🫂💖"` |
+| `ending.badge` | Golden badge text | `"✨ 19 on 19 ✨"` |
+| `ending.hearts` | Hearts below the badge | `"💛✨💛"` |
 
 ### Changing the Letter
 
@@ -78,8 +102,9 @@ Edit `data/letter.txt` — this is **plain text**. Write your letter here and it
    - `current/` — Recent photos
    - `together/` — Photos of you together
 2. Update the image paths in `data/messages.json` under the `gallery.categories` array
-3. **Supported formats:** `.jpg`, `.png`, `.webp`
-4. **Recommended:** Square or portrait orientation, at least **500px wide**
+3. For the slider: place `then.jpg` and `now.jpg` directly in `assets/images/`
+4. **Supported formats:** `.jpg`, `.png`, `.webp`
+5. **Recommended:** Square or portrait orientation, at least **500px wide**
 
 ### Adding Music
 
@@ -90,11 +115,11 @@ Edit `data/letter.txt` — this is **plain text**. Write your letter here and it
 ## 🚀 Running Locally
 
 ```bash
-# Option 1: Using Python
-python -m http.server 8000
-
-# Option 2: Using Node.js
+# Option 1: Using Node.js
 npx serve .
+
+# Option 2: Using Python
+python -m http.server 8000
 
 # Option 3: Using VS Code
 # Install 'Live Server' extension, right-click index.html → Open with Live Server
@@ -106,9 +131,19 @@ Then open [http://localhost:8000](http://localhost:8000) (or the port shown).
 
 1. Push code to GitHub
 2. Go to repo **Settings → Pages**
-3. Source: **Deploy from branch** → `main` → `/ (root)`
+3. Source: **Deploy from branch** → `master` → `/ (root)`
 4. Save and wait ~2 minutes
-5. Your site will be live at `https://yourusername.github.io/repo-name/`
+5. Your site will be live at `https://pranavi1022.github.io/hans-golden-birthday/`
+
+### Pushing Updates
+
+After editing messages, photos, or letter:
+```bash
+git add -A
+git commit -m "Update content"
+git push
+```
+GitHub Pages will auto-redeploy in ~1 minute.
 
 ## 💡 Tips
 
@@ -116,7 +151,7 @@ Then open [http://localhost:8000](http://localhost:8000) (or the port shown).
 - 📦 Optimize images for web (compress to **< 500KB** each)
 - 🖼️ Use portrait photos for gallery items
 - ↩️ The letter supports line breaks — just press Enter in the `.txt` file
-- 🎨 Colors and animations are defined in `css/styles.css` if you want to customize the theme
+- 🎨 Colors and animations are in the `css/` files if you want to customize the theme
 
 ## 📱 Browser Support
 
