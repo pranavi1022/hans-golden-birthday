@@ -1,0 +1,203 @@
+/* ============================================
+   ENDING.CSS — Final Section with Lanterns
+   Starry sky, floating lanterns, farewell quote
+   ============================================ */
+
+/* --- Section Background (dark-to-purple gradient) --- */
+#ending {
+  background: linear-gradient(180deg, #0A0A0A, #050510, #0A0510);
+  min-height: 100vh;
+  position: relative;
+  overflow: hidden;
+}
+
+/* ============================================
+   Stars Canvas (rendered by JS)
+   ============================================ */
+#stars-canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* ============================================
+   Lanterns Container
+   ============================================ */
+.lanterns-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 2;
+  overflow: hidden;
+}
+
+/* ============================================
+   Individual Lantern
+   ============================================ */
+.lantern {
+  position: absolute;
+  width: 30px;
+  height: 45px;
+  background: radial-gradient(ellipse, #FFD700, #D4AF37, #B8960C);
+  border-radius: 50% 50% 50% 50% / 40% 40% 60% 60%;
+  box-shadow:
+    0 0 20px rgba(255, 215, 0, 0.4),
+    0 0 60px rgba(255, 215, 0, 0.1);
+  animation: lanternRise var(--duration) linear infinite;
+  opacity: 0;
+}
+
+/* --- Lantern tassel / bottom detail --- */
+.lantern::after {
+  content: '';
+  position: absolute;
+  bottom: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 10px;
+  height: 8px;
+  border-bottom: 8px solid rgba(212, 175, 55, 0.5);
+  border-left: 4px solid transparent;
+  border-right: 4px solid transparent;
+}
+
+/* --- Lantern rising animation --- */
+@keyframes lanternRise {
+  0% {
+    bottom: -50px;
+    opacity: 0;
+  }
+  10% {
+    opacity: 0.8;
+  }
+  90% {
+    opacity: 0.6;
+  }
+  100% {
+    bottom: 110%;
+    opacity: 0;
+    transform: translateX(var(--sway, 30px));
+  }
+}
+
+/* ============================================
+   Ending Content (above stars & lanterns)
+   ============================================ */
+.ending-content {
+  position: relative;
+  z-index: 3;
+  text-align: center;
+}
+
+/* --- Main farewell quote --- */
+.ending-quote {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1.5rem, 4vw, 2.5rem);
+  color: var(--gold);
+  margin-bottom: 30px;
+  line-height: 1.5;
+}
+
+/* --- Badge with shimmer effect --- */
+.ending-badge {
+  display: inline-block;
+  padding: 15px 35px;
+  border: 2px solid var(--gold);
+  border-radius: 50px;
+  font-family: 'Playfair Display', serif;
+  font-size: 1.3rem;
+  color: var(--gold);
+  letter-spacing: 5px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* --- Shimmer light sweep across the badge --- */
+.ending-badge::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.2), transparent);
+  animation: shimmerSlide 3s infinite;
+}
+
+/* --- Shimmer slide (reused from hero, declared here for encapsulation) --- */
+@keyframes shimmerSlide {
+  0% {
+    left: -100%;
+  }
+  100% {
+    left: 100%;
+  }
+}
+
+/* --- Hearts with pulsing animation --- */
+.ending-hearts {
+  margin-top: 50px;
+  font-size: 2rem;
+  animation: pulse 2s infinite;
+}
+
+/* --- Pulse for hearts --- */
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.15);
+    opacity: 0.8;
+  }
+}
+
+/* ============================================
+   Ending Responsive
+   ============================================ */
+
+/* --- Tablet --- */
+@media (max-width: 768px) {
+  .ending-badge {
+    font-size: 1.1rem;
+    padding: 12px 28px;
+    letter-spacing: 3px;
+  }
+
+  .ending-hearts {
+    font-size: 1.5rem;
+    margin-top: 35px;
+  }
+
+  .lantern {
+    width: 24px;
+    height: 36px;
+  }
+}
+
+/* --- Mobile --- */
+@media (max-width: 480px) {
+  .ending-badge {
+    font-size: 0.95rem;
+    padding: 10px 22px;
+    letter-spacing: 2px;
+  }
+
+  .ending-hearts {
+    font-size: 1.2rem;
+    margin-top: 25px;
+  }
+
+  .lantern {
+    width: 20px;
+    height: 30px;
+  }
+}

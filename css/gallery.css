@@ -1,0 +1,162 @@
+/* ============================================
+   GALLERY.CSS — Photo Gallery Section
+   Grid layout with hover effects and overlays
+   ============================================ */
+
+/* --- Section Background --- */
+#gallery {
+  background: var(--black);
+  padding: 100px 20px;
+}
+
+/* ============================================
+   Gallery Grid Layout
+   ============================================ */
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 30px;
+  max-width: 1200px;
+  width: 100%;
+}
+
+/* ============================================
+   Category Grouping
+   ============================================ */
+.gallery-category {
+  margin-bottom: 50px;
+}
+
+/* --- Category heading with gold left border --- */
+.category-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.5rem;
+  color: var(--gold);
+  margin-bottom: 25px;
+  padding-left: 15px;
+  border-left: 3px solid var(--gold);
+}
+
+/* --- Images grid within a category --- */
+.category-images {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 20px;
+}
+
+/* ============================================
+   Gallery Item (individual photo card)
+   ============================================ */
+.gallery-item {
+  position: relative;
+  border-radius: 12px;
+  overflow: hidden;
+  aspect-ratio: 4 / 5;
+  border: 2px solid rgba(212, 175, 55, 0.2);
+  transition: all 0.4s ease;
+  background: var(--black-light);
+}
+
+/* --- Hover: lift + gold border + glow shadow --- */
+.gallery-item:hover {
+  transform: translateY(-8px);
+  border-color: var(--gold);
+  box-shadow: 0 20px 40px rgba(212, 175, 55, 0.2);
+}
+
+/* --- Image fills the card --- */
+.gallery-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+
+/* --- Subtle zoom on hover --- */
+.gallery-item:hover img {
+  transform: scale(1.05);
+}
+
+/* ============================================
+   Gallery Placeholder (when no image loaded)
+   ============================================ */
+.gallery-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, var(--black-light), var(--black-medium));
+  color: var(--gold);
+  font-family: 'Playfair Display', serif;
+  font-size: 1rem;
+  text-align: center;
+  padding: 20px;
+}
+
+/* ============================================
+   Gallery Overlay (caption on hover)
+   ============================================ */
+.gallery-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 15px;
+  background: linear-gradient(transparent, rgba(0, 0, 0, 0.8));
+  color: var(--white);
+  font-size: 0.85rem;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+/* --- Show overlay on hover --- */
+.gallery-item:hover .gallery-overlay {
+  opacity: 1;
+}
+
+/* ============================================
+   Gallery Responsive
+   ============================================ */
+
+/* --- Tablet --- */
+@media (max-width: 768px) {
+  #gallery {
+    padding: 70px 15px;
+  }
+
+  .gallery-grid {
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 20px;
+  }
+
+  .category-images {
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 15px;
+  }
+
+  .gallery-category {
+    margin-bottom: 35px;
+  }
+}
+
+/* --- Mobile --- */
+@media (max-width: 480px) {
+  #gallery {
+    padding: 50px 12px;
+  }
+
+  .gallery-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+
+  .category-images {
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+
+  .category-title {
+    font-size: 1.2rem;
+  }
+}

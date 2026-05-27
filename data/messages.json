@@ -1,0 +1,61 @@
+{
+  "hero": {
+    "title": "HAPPY GOLDEN BIRTHDAY TO MY HANSSS 💛✨",
+    "subtitle": "My Twin Soul"
+  },
+  "balloons": [
+    "Golden bday for my golden girl 💛✨",
+    "More adventures loading… 🌍💖",
+    "6th class us would be surprised 😭💛"
+  ],
+  "gallery": {
+    "categories": [
+      {
+        "name": "Childhood Memories",
+        "emoji": "👶",
+        "images": [
+          "assets/images/childhood/1.jpg",
+          "assets/images/childhood/2.jpg"
+        ]
+      },
+      {
+        "name": "Growing Up Together",
+        "emoji": "🌱",
+        "images": [
+          "assets/images/growing-up/1.jpg",
+          "assets/images/growing-up/2.jpg"
+        ]
+      },
+      {
+        "name": "Current Era",
+        "emoji": "✨",
+        "images": [
+          "assets/images/current/1.jpg",
+          "assets/images/current/2.jpg"
+        ]
+      },
+      {
+        "name": "Us Together",
+        "emoji": "💛",
+        "images": [
+          "assets/images/together/1.jpg",
+          "assets/images/together/2.jpg"
+        ]
+      }
+    ]
+  },
+  "slider": {
+    "title": "Then → Now 💛",
+    "thenLabel": "Then 📚",
+    "nowLabel": "Now 🎓",
+    "thenImage": "assets/images/then.jpg",
+    "nowImage": "assets/images/now.jpg"
+  },
+  "wish": {
+    "message": "Make a wish ✨ May all your golden dreams come true 💛"
+  },
+  "ending": {
+    "quote": "Forever agreement. No way back 🫂💖",
+    "badge": "✨ 19 on 19 ✨"
+  }
+}

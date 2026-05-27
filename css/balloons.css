@@ -1,0 +1,237 @@
+/* ============================================
+   BALLOONS.CSS — Interactive Balloon Section
+   Click-to-pop balloons that reveal messages
+   ============================================ */
+
+/* --- Section Background --- */
+#balloons {
+  background: var(--dark-gradient);
+}
+
+/* ============================================
+   Balloon Container Layout
+   ============================================ */
+.balloons-container {
+  display: flex;
+  gap: 60px;
+  justify-content: center;
+  align-items: flex-end;
+  flex-wrap: wrap;
+  perspective: 800px;
+}
+
+/* ============================================
+   Individual Balloon Wrapper
+   ============================================ */
+.balloon-wrapper {
+  cursor: pointer;
+  transition: transform 0.3s;
+  position: relative;
+}
+
+/* --- Hover lift effect --- */
+.balloon-wrapper:hover {
+  transform: scale(1.05);
+}
+
+/* ============================================
+   Balloon Body (the inflated part)
+   ============================================ */
+.balloon-body {
+  width: 120px;
+  height: 150px;
+  background: var(--gold-gradient);
+  border-radius: 50% 50% 50% 50% / 40% 40% 60% 60%;
+  position: relative;
+  box-shadow:
+    inset -20px -10px 30px rgba(0, 0, 0, 0.3),
+    0 0 40px rgba(212, 175, 55, 0.3);
+  animation: balloonFloat 3s ease-in-out infinite;
+}
+
+/* --- Staggered float delays per balloon --- */
+.balloon-wrapper:nth-child(1) .balloon-body {
+  animation-delay: 0s;
+}
+
+.balloon-wrapper:nth-child(2) .balloon-body {
+  animation-delay: 0.5s;
+}
+
+.balloon-wrapper:nth-child(3) .balloon-body {
+  animation-delay: 1s;
+}
+
+/* --- Glossy shine highlight --- */
+.balloon-body::before {
+  content: '';
+  position: absolute;
+  top: 15%;
+  left: 25%;
+  width: 30%;
+  height: 40%;
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  transform: rotate(-30deg);
+  filter: blur(3px);
+}
+
+/* --- Knot at the bottom --- */
+.balloon-body::after {
+  content: '';
+  position: absolute;
+  bottom: -15px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 0;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  border-top: 15px solid var(--gold-dark);
+}
+
+/* ============================================
+   Balloon String
+   ============================================ */
+.balloon-string {
+  width: 2px;
+  height: 80px;
+  background: var(--gold);
+  margin: 0 auto;
+  position: relative;
+}
+
+/* --- Gradient fade on the string --- */
+.balloon-string::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -3px;
+  width: 8px;
+  height: 100%;
+  background: linear-gradient(180deg, var(--gold-dark), transparent);
+}
+
+/* ============================================
+   Popped State
+   ============================================ */
+
+/* --- Balloon pops and disappears --- */
+.balloon-wrapper.popped .balloon-body {
+  animation: balloonPop 0.5s forwards;
+}
+
+/* --- String fades away --- */
+.balloon-wrapper.popped .balloon-string {
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+/* ============================================
+   Hidden Message (revealed on pop)
+   ============================================ */
+.balloon-message {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: rgba(10, 10, 10, 0.9);
+  border: 1px solid var(--gold);
+  border-radius: 16px;
+  padding: 25px 30px;
+  color: var(--gold-light);
+  font-family: 'Playfair Display', serif;
+  font-size: 1.1rem;
+  text-align: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.5s ease;
+  min-width: 250px;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+}
+
+/* --- Message appears after pop --- */
+.balloon-wrapper.popped .balloon-message {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* ============================================
+   Balloon Keyframes
+   ============================================ */
+
+/* --- Gentle floating motion --- */
+@keyframes balloonFloat {
+  0%, 100% {
+    transform: translateY(0) rotate(-2deg);
+  }
+  50% {
+    transform: translateY(-20px) rotate(2deg);
+  }
+}
+
+/* --- Pop explosion effect --- */
+@keyframes balloonPop {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.3);
+    opacity: 0.5;
+  }
+  100% {
+    transform: scale(0);
+    opacity: 0;
+  }
+}
+
+/* ============================================
+   Balloons Responsive
+   ============================================ */
+
+/* --- Tablet --- */
+@media (max-width: 768px) {
+  .balloons-container {
+    gap: 40px;
+  }
+
+  .balloon-body {
+    width: 100px;
+    height: 125px;
+  }
+
+  .balloon-string {
+    height: 60px;
+  }
+
+  .balloon-message {
+    min-width: 200px;
+    font-size: 1rem;
+    padding: 20px 25px;
+  }
+}
+
+/* --- Mobile --- */
+@media (max-width: 480px) {
+  .balloons-container {
+    gap: 25px;
+  }
+
+  .balloon-body {
+    width: 80px;
+    height: 100px;
+  }
+
+  .balloon-string {
+    height: 45px;
+  }
+
+  .balloon-message {
+    min-width: 180px;
+    font-size: 0.9rem;
+    padding: 15px 20px;
+  }
+}

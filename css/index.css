@@ -1,0 +1,187 @@
+/* ============================================
+   INDEX.CSS — Design System & Global Styles
+   Hans's Golden Birthday Website
+   ============================================ */
+
+/* --- Google Fonts Import --- */
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Inter:wght@300;400;600&family=Playfair+Display:wght@400;700;900&display=swap');
+
+/* ============================================
+   CSS Custom Properties (Design Tokens)
+   ============================================ */
+:root {
+  /* --- Gold Palette --- */
+  --gold: #D4AF37;
+  --gold-light: #F5E6A3;
+  --gold-dark: #B8960C;
+  --gold-shimmer: #FFD700;
+
+  /* --- Dark Palette --- */
+  --black: #0A0A0A;
+  --black-light: #1A1A1A;
+  --black-medium: #2A2A2A;
+
+  /* --- Light Palette --- */
+  --white: #FFFFFF;
+  --white-soft: rgba(255, 255, 255, 0.9);
+
+  /* --- Gradients --- */
+  --gold-gradient: linear-gradient(135deg, #D4AF37, #FFD700, #B8960C);
+  --dark-gradient: linear-gradient(180deg, #0A0A0A, #1A1A1A);
+}
+
+/* ============================================
+   Global Reset
+   ============================================ */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* --- Smooth Scrolling --- */
+html {
+  scroll-behavior: smooth;
+}
+
+/* --- Base Body Styles --- */
+body {
+  margin: 0;
+  background: var(--black);
+  color: var(--white);
+  font-family: 'Inter', sans-serif;
+  overflow-x: hidden;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* --- Text Selection --- */
+::selection {
+  background: var(--gold);
+  color: var(--black);
+}
+
+::-moz-selection {
+  background: var(--gold);
+  color: var(--black);
+}
+
+/* ============================================
+   Custom Scrollbar
+   ============================================ */
+/* --- Webkit (Chrome, Edge, Safari) --- */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--black);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--gold-dark);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--gold);
+}
+
+/* --- Firefox --- */
+html {
+  scrollbar-width: thin;
+  scrollbar-color: var(--gold-dark) var(--black);
+}
+
+/* ============================================
+   Section Base Styles
+   ============================================ */
+.section {
+  min-height: 100vh;
+  position: relative;
+  padding: 80px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+/* --- Section Title --- */
+.section-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  color: var(--gold);
+  text-align: center;
+  margin-bottom: 60px;
+  position: relative;
+}
+
+/* --- Gold underline decoration beneath section titles --- */
+.section-title::after {
+  content: '';
+  display: block;
+  width: 80px;
+  height: 2px;
+  background: var(--gold-gradient);
+  margin: 15px auto 0;
+}
+
+/* ============================================
+   Utility Classes
+   ============================================ */
+
+/* --- Gold text color helper --- */
+.gold-text {
+  color: var(--gold);
+}
+
+/* --- Glassmorphism panel --- */
+.glass {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(212, 175, 55, 0.2);
+  border-radius: 16px;
+}
+
+/* --- Scroll-triggered reveal animation --- */
+.reveal {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+.reveal.active {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ============================================
+   Responsive Media Queries
+   ============================================ */
+
+/* --- Tablet --- */
+@media (max-width: 768px) {
+  .section {
+    padding: 60px 15px;
+  }
+
+  .section-title {
+    margin-bottom: 40px;
+  }
+}
+
+/* --- Mobile --- */
+@media (max-width: 480px) {
+  .section {
+    padding: 40px 12px;
+  }
+
+  .section-title {
+    margin-bottom: 30px;
+  }
+}

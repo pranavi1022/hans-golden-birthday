@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Happy Golden Birthday to Hans! 🎂 Turning 19 on the 19th — a premium interactive birthday celebration.">
+    <meta name="theme-color" content="#D4AF37">
+    <title>Happy Golden Birthday Hans 💛✨ | 19 on 19</title>
+
+    <!-- Favicon (gold sparkle emoji as SVG) -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>✨</text></svg>">
+
+    <!-- ===== CSS Stylesheets ===== -->
+    <!-- Design System & Global Styles -->
+    <link rel="stylesheet" href="css/index.css">
+    <!-- Section-specific styles -->
+    <link rel="stylesheet" href="css/hero.css">
+    <link rel="stylesheet" href="css/balloons.css">
+    <link rel="stylesheet" href="css/gallery.css">
+    <link rel="stylesheet" href="css/slider.css">
+    <link rel="stylesheet" href="css/wish.css">
+    <link rel="stylesheet" href="css/letter.css">
+    <link rel="stylesheet" href="css/ending.css">
+    <!-- Animation utilities -->
+    <link rel="stylesheet" href="css/animations.css">
+</head>
+<body>
+
+    <!-- ============================================ -->
+    <!-- MUSIC TOGGLE (fixed position, always visible) -->
+    <!-- ============================================ -->
+    <button class="music-toggle" id="music-toggle" aria-label="Toggle background music" title="Toggle Music">
+        🔇
+    </button>
+
+    <!-- ============================================ -->
+    <!-- SECTION 1: HERO                              -->
+    <!-- Full-screen entrance with golden particles    -->
+    <!-- ============================================ -->
+    <section id="hero" class="section">
+        <!-- Golden particle animation canvas -->
+        <canvas id="particle-canvas"></canvas>
+
+        <!-- Hero Content -->
+        <div class="hero-content">
+            <!-- Glow effect behind title -->
+            <div class="hero-title-glow" aria-hidden="true"></div>
+
+            <!-- Main title — populated from messages.json -->
+            <h1 class="hero-title" id="hero-title">HAPPY GOLDEN BIRTHDAY 💛✨</h1>
+
+            <!-- Subtitle — populated from messages.json -->
+            <p class="hero-subtitle" id="hero-subtitle">My Twin Soul</p>
+
+            <!-- Golden badge -->
+            <div class="hero-badge">✨ 19 on 19 ✨</div>
+        </div>
+
+        <!-- Scroll indicator -->
+        <div class="hero-scroll-indicator" aria-hidden="true">
+            <span></span>
+        </div>
+    </section>
+
+    <!-- ============================================ -->
+    <!-- SECTION 2: BALLOONS                          -->
+    <!-- 3 clickable golden balloons with messages     -->
+    <!-- ============================================ -->
+    <section id="balloons" class="section">
+        <h2 class="section-title reveal">Pop a Balloon 🎈</h2>
+
+        <div class="balloons-container">
+            <!-- Balloon 1 -->
+            <div class="balloon-wrapper reveal" data-index="0">
+                <div class="balloon-body"></div>
+                <div class="balloon-string"></div>
+                <div class="balloon-message" data-index="0"></div>
+            </div>
+
+            <!-- Balloon 2 -->
+            <div class="balloon-wrapper reveal delay-2" data-index="1">
+                <div class="balloon-body"></div>
+                <div class="balloon-string"></div>
+                <div class="balloon-message" data-index="1"></div>
+            </div>
+
+            <!-- Balloon 3 -->
+            <div class="balloon-wrapper reveal delay-4" data-index="2">
+                <div class="balloon-body"></div>
+                <div class="balloon-string"></div>
+                <div class="balloon-message" data-index="2"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================ -->
+    <!-- SECTION 3: MEMORY GALLERY                    -->
+    <!-- Photo grid — dynamically populated           -->
+    <!-- ============================================ -->
+    <section id="gallery" class="section">
+        <h2 class="section-title reveal">Our Golden Memories 📸</h2>
+
+        <!-- Gallery grid is populated dynamically from messages.json by main.js -->
+        <div class="gallery-grid" id="gallery-grid">
+            <!-- Categories and images injected here -->
+        </div>
+    </section>
+
+    <!-- ============================================ -->
+    <!-- SECTION 4: THEN VS NOW SLIDER                -->
+    <!-- Draggable comparison slider                   -->
+    <!-- ============================================ -->
+    <section id="slider" class="section">
+        <h2 class="section-title reveal" id="slider-title">Then → Now 💛</h2>
+
+        <div class="slider-container reveal" id="slider-container">
+            <!-- Then image (background/base layer) -->
+            <div class="slider-image then-image">
+                <img id="then-image" src="" alt="Then — 6th class">
+                <div class="slider-placeholder" id="then-placeholder">📚 Then Photo</div>
+            </div>
+
+            <!-- Now image (clipped overlay layer) -->
+            <div class="slider-image now-image" id="now-image-container">
+                <img id="now-image" src="" alt="Now — BTech">
+                <div class="slider-placeholder" id="now-placeholder">🎓 Now Photo</div>
+            </div>
+
+            <!-- Draggable handle -->
+            <div class="slider-handle" id="slider-handle"></div>
+
+            <!-- Labels -->
+            <span class="slider-label then-label" id="then-label">Then 📚</span>
+            <span class="slider-label now-label" id="now-label">Now 🎓</span>
+        </div>
+    </section>
+
+    <!-- ============================================ -->
+    <!-- SECTION 5: GOLDEN WISH                       -->
+    <!-- Birthday cake + candle blowing + confetti     -->
+    <!-- ============================================ -->
+    <section id="wish" class="section">
+        <h2 class="section-title reveal">Make a Golden Wish 🎂</h2>
+
+        <div class="cake-container reveal">
+            <!-- Birthday Cake (CSS art) -->
+            <div class="cake">
+                <!-- Candles on top -->
+                <div class="candles-container">
+                    <div class="candle"><div class="flame"></div></div>
+                    <div class="candle"><div class="flame"></div></div>
+                    <div class="candle"><div class="flame"></div></div>
+                </div>
+
+                <!-- Cake layers -->
+                <div class="cake-layer"></div>
+                <div class="cake-layer"></div>
+                <div class="cake-layer"></div>
+            </div>
+            <!-- Cake plate -->
+            <div class="cake-plate"></div>
+        </div>
+
+        <!-- Blow button -->
+        <button class="blow-btn reveal" id="blow-btn">✨ Blow the Candles ✨</button>
+
+        <!-- Wish message — populated from messages.json -->
+        <p class="wish-message" id="wish-message"></p>
+    </section>
+
+    <!-- ============================================ -->
+    <!-- SECTION 6: LETTER                            -->
+    <!-- Handwritten card style letter                 -->
+    <!-- ============================================ -->
+    <section id="letter" class="section">
+        <h2 class="section-title reveal">A Letter For You 💌</h2>
+
+        <div class="letter-container reveal">
+            <div class="letter-card">
+                <!-- Decorative corners -->
+                <div class="letter-corner top-left"></div>
+                <div class="letter-corner top-right"></div>
+                <div class="letter-corner bottom-left"></div>
+                <div class="letter-corner bottom-right"></div>
+
+                <!-- Wax seal -->
+                <div class="letter-seal">💛</div>
+
+                <!-- Letter content — populated from letter.txt -->
+                <div class="letter-content" id="letter-content">
+                    Loading...
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================ -->
+    <!-- SECTION 7: ENDING                            -->
+    <!-- Dark sky + golden stars + lanterns             -->
+    <!-- ============================================ -->
+    <section id="ending" class="section">
+        <!-- Stars canvas -->
+        <canvas id="stars-canvas"></canvas>
+
+        <!-- Floating lanterns — dynamically created by main.js -->
+        <div class="lanterns-container" id="lanterns-container"></div>
+
+        <!-- Ending content -->
+        <div class="ending-content reveal">
+            <!-- Final quote — populated from messages.json -->
+            <p class="ending-quote" id="ending-quote"></p>
+
+            <!-- Badge -->
+            <div class="ending-badge" id="ending-badge">✨ 19 on 19 ✨</div>
+
+            <!-- Hearts -->
+            <div class="ending-hearts" aria-hidden="true">💛✨💛</div>
+        </div>
+    </section>
+
+    <!-- ============================================ -->
+    <!-- JAVASCRIPT MODULES                           -->
+    <!-- ============================================ -->
+    <!-- Particle systems -->
+    <script src="js/particles.js"></script>
+    <script src="js/animations.js"></script>
+    <!-- Interactive modules -->
+    <script src="js/balloons.js"></script>
+    <script src="js/slider.js"></script>
+    <script src="js/wish.js"></script>
+    <script src="js/music.js"></script>
+    <!-- Main app (must load last — initializes everything) -->
+    <script src="js/main.js"></script>
+
+</body>
+</html>

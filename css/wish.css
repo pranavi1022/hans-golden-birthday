@@ -1,0 +1,336 @@
+/* ============================================
+   WISH.CSS — Birthday Wish Section
+   Cake with candles, blow interaction, confetti
+   ============================================ */
+
+/* --- Section Background --- */
+#wish {
+  background: radial-gradient(ellipse at bottom, #1A1A1A 0%, #0A0A0A 70%);
+  min-height: 100vh;
+}
+
+/* ============================================
+   Cake Container
+   ============================================ */
+.cake-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 40px;
+}
+
+/* --- Cake wrapper for positioning --- */
+.cake {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* ============================================
+   Cake Layers (3-tiered)
+   ============================================ */
+.cake-layer {
+  border-radius: 10px;
+  position: relative;
+}
+
+/* --- Top layer (smallest) --- */
+.cake-layer:nth-child(1) {
+  width: 120px;
+  height: 60px;
+  background: linear-gradient(180deg, #D4AF37, #B8960C);
+  border-radius: 10px 10px 0 0;
+}
+
+/* --- Middle layer --- */
+.cake-layer:nth-child(2) {
+  width: 160px;
+  height: 55px;
+  background: linear-gradient(180deg, #c9a030, #a67c00);
+}
+
+/* --- Bottom layer (largest) --- */
+.cake-layer:nth-child(3) {
+  width: 200px;
+  height: 55px;
+  background: linear-gradient(180deg, #b8920a, #8a6d00);
+  border-radius: 0 0 10px 10px;
+}
+
+/* --- Decorative frosting lines on each layer --- */
+.cake-layer::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 8px;
+  background: repeating-linear-gradient(
+    90deg,
+    transparent,
+    transparent 10px,
+    rgba(255, 255, 255, 0.15) 10px,
+    rgba(255, 255, 255, 0.15) 12px
+  );
+}
+
+/* --- Cake plate base --- */
+.cake-plate {
+  width: 240px;
+  height: 12px;
+  background: var(--gold-gradient);
+  border-radius: 0 0 50% 50% / 0 0 100% 100%;
+  margin-top: 2px;
+}
+
+/* ============================================
+   Candles & Flames
+   ============================================ */
+.candles-container {
+  display: flex;
+  gap: 25px;
+  position: absolute;
+  top: -45px;
+}
+
+/* --- Individual candle stick --- */
+.candle {
+  width: 8px;
+  height: 35px;
+  background: linear-gradient(180deg, #fff, #f0e0b0);
+  border-radius: 3px 3px 0 0;
+  position: relative;
+}
+
+/* --- Candle flame --- */
+.flame {
+  position: absolute;
+  top: -20px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 12px;
+  height: 20px;
+  background: radial-gradient(ellipse at bottom, #FFD700, #FF8C00, transparent);
+  border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+  animation: flicker 0.3s ease-in-out infinite alternate;
+  filter: blur(0.5px);
+}
+
+/* --- Inner bright core of the flame --- */
+.flame::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 6px;
+  height: 8px;
+  background: radial-gradient(#fff, #FFD700);
+  border-radius: 50%;
+  filter: blur(1px);
+}
+
+/* --- Blown-out candle state --- */
+.candle.blown .flame {
+  animation: flameOut 0.5s forwards;
+}
+
+/* ============================================
+   Blow Button (CTA to blow out candles)
+   ============================================ */
+.blow-btn {
+  margin-top: 40px;
+  padding: 15px 40px;
+  background: transparent;
+  border: 2px solid var(--gold);
+  color: var(--gold);
+  font-family: 'Playfair Display', serif;
+  font-size: 1.1rem;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  letter-spacing: 2px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* --- Hover: fill with gold --- */
+.blow-btn:hover {
+  background: var(--gold);
+  color: var(--black);
+  box-shadow: 0 0 30px rgba(212, 175, 55, 0.4);
+}
+
+/* --- Hidden state after candles are blown --- */
+.blow-btn.hidden {
+  display: none;
+}
+
+/* ============================================
+   Wish Message (appears after blowing)
+   ============================================ */
+.wish-message {
+  margin-top: 40px;
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1.2rem, 3vw, 1.8rem);
+  color: var(--gold-light);
+  text-align: center;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 1s ease;
+  max-width: 600px;
+}
+
+/* --- Visible state with slide-up --- */
+.wish-message.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ============================================
+   Confetti Overlay
+   ============================================ */
+.confetti-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 9999;
+  overflow: hidden;
+}
+
+/* --- Individual confetti piece --- */
+.confetti-piece {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  top: -20px;
+  animation: confettiFall 3s linear forwards;
+}
+
+/* ============================================
+   Wish Keyframes
+   ============================================ */
+
+/* --- Flame flicker animation --- */
+@keyframes flicker {
+  0% {
+    transform: translateX(-50%) scale(1) rotate(-2deg);
+  }
+  100% {
+    transform: translateX(-50%) scale(1.1) rotate(2deg);
+  }
+}
+
+/* --- Flame extinguish animation --- */
+@keyframes flameOut {
+  0% {
+    opacity: 1;
+    transform: translateX(-50%) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(-50%) scale(0) translateY(-10px);
+  }
+}
+
+/* --- Confetti falling with drift --- */
+@keyframes confettiFall {
+  0% {
+    top: -10%;
+    opacity: 1;
+    transform: translateX(0) rotate(0deg);
+  }
+  100% {
+    top: 110%;
+    opacity: 0;
+    transform: translateX(var(--drift, 50px)) rotate(720deg);
+  }
+}
+
+/* ============================================
+   Wish Responsive
+   ============================================ */
+
+/* --- Tablet --- */
+@media (max-width: 768px) {
+  .cake-layer:nth-child(1) {
+    width: 100px;
+    height: 50px;
+  }
+
+  .cake-layer:nth-child(2) {
+    width: 135px;
+    height: 45px;
+  }
+
+  .cake-layer:nth-child(3) {
+    width: 170px;
+    height: 45px;
+  }
+
+  .cake-plate {
+    width: 200px;
+  }
+
+  .candles-container {
+    gap: 20px;
+    top: -40px;
+  }
+
+  .blow-btn {
+    padding: 12px 30px;
+    font-size: 1rem;
+  }
+}
+
+/* --- Mobile --- */
+@media (max-width: 480px) {
+  .cake-layer:nth-child(1) {
+    width: 80px;
+    height: 42px;
+  }
+
+  .cake-layer:nth-child(2) {
+    width: 110px;
+    height: 38px;
+  }
+
+  .cake-layer:nth-child(3) {
+    width: 140px;
+    height: 38px;
+  }
+
+  .cake-plate {
+    width: 165px;
+    height: 10px;
+  }
+
+  .candles-container {
+    gap: 15px;
+    top: -35px;
+  }
+
+  .candle {
+    width: 6px;
+    height: 28px;
+  }
+
+  .flame {
+    width: 10px;
+    height: 16px;
+    top: -16px;
+  }
+
+  .blow-btn {
+    padding: 10px 25px;
+    font-size: 0.9rem;
+  }
+
+  .wish-message {
+    font-size: clamp(1rem, 4vw, 1.3rem);
+  }
+}

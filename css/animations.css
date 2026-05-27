@@ -1,0 +1,210 @@
+/* ============================================
+   ANIMATIONS.CSS — Global Keyframes & Utilities
+   Reusable animation library for the birthday site
+   ============================================ */
+
+/* ============================================
+   KEYFRAMES — Core Animation Definitions
+   ============================================ */
+
+/* --- Simple fade in --- */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* --- Fade in with upward slide --- */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* --- Fade in with downward slide --- */
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* --- Fade in from the left --- */
+@keyframes fadeInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* --- Fade in from the right --- */
+@keyframes fadeInRight {
+  from {
+    opacity: 0;
+    transform: translateX(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* --- Scale in from smaller size --- */
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* --- Background-position shimmer (for gradient text/backgrounds) --- */
+@keyframes shimmer {
+  0% {
+    background-position: -200% center;
+  }
+  100% {
+    background-position: 200% center;
+  }
+}
+
+/* --- Gentle vertical floating motion --- */
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-15px);
+  }
+}
+
+/* --- Pulsing gold glow shadow --- */
+@keyframes glow {
+  0%, 100% {
+    box-shadow: 0 0 5px rgba(212, 175, 55, 0.2);
+  }
+  50% {
+    box-shadow: 0 0 20px rgba(212, 175, 55, 0.4);
+  }
+}
+
+/* --- Sparkle: pop in then fade out --- */
+@keyframes sparkle {
+  0%, 100% {
+    opacity: 0;
+    transform: scale(0);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* --- Typewriter: reveal text width from 0 to full --- */
+@keyframes typewriter {
+  from {
+    width: 0;
+  }
+  to {
+    width: 100%;
+  }
+}
+
+/* ============================================
+   UTILITY CLASSES — Apply animations via HTML
+   All start with opacity: 0 and animate forwards
+   ============================================ */
+
+/* --- Fade in (no movement) --- */
+.anim-fade-in {
+  animation: fadeIn 1s ease forwards;
+}
+
+/* --- Fade in + slide up --- */
+.anim-fade-in-up {
+  animation: fadeInUp 1s ease forwards;
+}
+
+/* --- Fade in + slide down --- */
+.anim-fade-in-down {
+  animation: fadeInDown 1s ease forwards;
+}
+
+/* --- Scale in from 0.8 --- */
+.anim-scale-in {
+  animation: scaleIn 0.8s ease forwards;
+}
+
+/* --- Continuous floating motion --- */
+.anim-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+/* --- Continuous gold glow pulse --- */
+.anim-glow {
+  animation: glow 2s ease-in-out infinite;
+}
+
+/* ============================================
+   DELAY CLASSES — Stagger sequential animations
+   Use with any anim-* class for cascade effects
+   ============================================ */
+
+/* --- 200ms delay --- */
+.delay-1 {
+  animation-delay: 0.2s;
+}
+
+/* --- 400ms delay --- */
+.delay-2 {
+  animation-delay: 0.4s;
+}
+
+/* --- 600ms delay --- */
+.delay-3 {
+  animation-delay: 0.6s;
+}
+
+/* --- 800ms delay --- */
+.delay-4 {
+  animation-delay: 0.8s;
+}
+
+/* --- 1000ms delay --- */
+.delay-5 {
+  animation-delay: 1s;
+}
+
+/* ============================================
+   REDUCED MOTION — Accessibility
+   Disable animations for users who prefer reduced motion
+   ============================================ */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
