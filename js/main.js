@@ -432,6 +432,8 @@ function populateEnding(ending) {
       });
 
       btn.addEventListener('click', () => {
+        if (btn.classList.contains('wrong')) return;
+
         // Mark this button as wrong
         btn.classList.add('wrong');
         btn.style.borderColor = '#ff4d4d';
@@ -440,15 +442,20 @@ function populateEnding(ending) {
         btn.style.transform = 'translateY(0)';
         
         wrongCount++;
-        quizFeedback.textContent = quizData.failure;
-        quizFeedback.style.color = '#ff4d4d';
-        quizFeedback.style.textShadow = 'none';
+        
+        // Only trigger the sequence when ALL options (Burger, Pizza, Mocktail) are tried
+        if (wrongCount >= 3) {
+          quizFeedback.textContent = quizData.failure;
+          quizFeedback.style.color = '#ff4d4d';
+          quizFeedback.style.textShadow = 'none';
 
-        // After she's tried at least one wrong option, send the bird!
-        if (wrongCount >= 1 && birdSecretMsg) {
-          setTimeout(() => {
-            birdSecretMsg.style.display = 'block';
-          }, 800);
+          if (birdSecretMsg) {
+            setTimeout(() => {
+              birdSecretMsg.style.display = 'block';
+            }, 800);
+          }
+        } else {
+          quizFeedback.textContent = ''; // Keep it clean until all options are tried
         }
       });
 
