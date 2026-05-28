@@ -7,6 +7,17 @@
  *  To edit ANY text, just edit those files — no code changes needed!
  * ============================================================ */
 
+/**
+ * playSoundEffect
+ * Safely plays audio effects. Doesn't crash if files are missing.
+ */
+function playSoundEffect(src) {
+  const sound = new Audio(src);
+  sound.play().catch(err => {
+    console.log(`Sound effect ${src} could not play. This is normal if the file has not been added yet!`);
+  });
+}
+
 document.addEventListener('DOMContentLoaded', async () => {
   try {
     /* ----------------------------------------------------------
@@ -107,6 +118,7 @@ function initEnvelopeLetter() {
   envelope.addEventListener('click', () => {
     if (envelope.classList.contains('opened')) return;
     envelope.classList.add('opened');
+    playSoundEffect('assets/music/open_envelope.mp3');
     /* After envelope fades, show the password screen */
     setTimeout(() => {
       envelope.style.display = 'none';
@@ -122,6 +134,7 @@ function initEnvelopeLetter() {
     const checkPassword = () => {
       const enteredCode = passInput.value.trim();
       if (enteredCode === '1919') {
+        playSoundEffect('assets/music/unlock.mp3');
         passContainer.style.display = 'none';
         letterCard.style.display = 'block';
         
@@ -130,6 +143,7 @@ function initEnvelopeLetter() {
           createConfetti();
         }
       } else {
+        playSoundEffect('assets/music/wrong.mp3');
         passError.style.opacity = '1';
         passInput.style.borderColor = '#ff4d4d';
         setTimeout(() => {
@@ -442,6 +456,7 @@ function populateEnding(ending) {
         btn.style.transform = 'translateY(0)';
         
         wrongCount++;
+        playSoundEffect('assets/music/wrong.mp3');
         
         // Only trigger the sequence when ALL options (Burger, Pizza, Mocktail) are tried
         if (wrongCount >= 3) {
@@ -465,6 +480,7 @@ function populateEnding(ending) {
 
   // --- PRAN QUESTION: Both options are correct → unlock SODA ---
   function unlockSoda() {
+    playSoundEffect('assets/music/correct.mp3');
     if (birdSecretMsg) birdSecretMsg.style.display = 'none';
     if (hiddenSodaContainer) {
       hiddenSodaContainer.style.display = 'block';
@@ -480,6 +496,7 @@ function populateEnding(ending) {
   // --- SODA BUTTON: The real correct answer → massive celebration ---
   if (sodaBtn && quizFeedback && quizData) {
     sodaBtn.addEventListener('click', () => {
+      playSoundEffect('assets/music/blast.mp3');
       quizFeedback.textContent = quizData.success;
       quizFeedback.style.color = '#ffd700';
       quizFeedback.style.textShadow = '0 0 15px rgba(255,215,0,0.6)';
