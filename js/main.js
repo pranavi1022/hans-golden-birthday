@@ -13,8 +13,8 @@ document.addEventListener('DOMContentLoaded', async () => {
      * 1.  FETCH DATA FILES
      * ---------------------------------------------------------- */
     const [messagesRes, letterRes] = await Promise.all([
-      fetch('data/messages.json'),
-      fetch('data/letter.txt')
+      fetch('data/messages.json?v=1.1'),
+      fetch('data/letter.txt?v=1.1')
     ]);
 
     if (!messagesRes.ok) throw new Error('Failed to load messages.json');
