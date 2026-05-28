@@ -380,23 +380,27 @@ function populateEnding(ending) {
     });
   }
 
-  /* --- 3. FOOD QUIZ WITH HIDDEN SODA TWIST --- */
+  /* --- 3. FOOD QUIZ WITH BIRD MESSAGE → PRAN QUESTION → SODA TWIST --- */
   const quizData = ending.quiz;
   const quizQuestion = document.getElementById('quiz-question');
   const quizOptionsContainer = document.getElementById('quiz-options');
   const quizFeedback = document.getElementById('quiz-feedback');
+  const birdSecretMsg = document.getElementById('bird-secret-msg');
   const hiddenSodaContainer = document.getElementById('hidden-soda-container');
   const sodaBtn = document.getElementById('soda-btn');
+  const pranBtn = document.getElementById('quiz-pran-btn');
+  const obvBtn = document.getElementById('quiz-obv-btn');
+
+  let wrongCount = 0; // Track how many wrong answers she's tried
 
   if (quizData && quizQuestion && quizOptionsContainer && quizFeedback) {
     quizQuestion.textContent = quizData.question;
-    quizOptionsContainer.innerHTML = ''; // clear initial
+    quizOptionsContainer.innerHTML = '';
 
     quizData.options.forEach((optionText, idx) => {
       const btn = document.createElement('button');
       btn.textContent = optionText;
       
-      // Inline styles for high-fidelity interactive buttons
       Object.assign(btn.style, {
         background: 'rgba(255, 255, 255, 0.05)',
         border: '1px solid rgba(212, 175, 55, 0.3)',
@@ -412,30 +416,39 @@ function populateEnding(ending) {
       });
 
       btn.addEventListener('mouseover', () => {
-        btn.style.background = 'rgba(212, 175, 55, 0.15)';
-        btn.style.borderColor = 'var(--gold)';
-        btn.style.transform = 'translateY(-2px)';
+        if (!btn.classList.contains('wrong')) {
+          btn.style.background = 'rgba(212, 175, 55, 0.15)';
+          btn.style.borderColor = 'var(--gold)';
+          btn.style.transform = 'translateY(-2px)';
+        }
       });
 
       btn.addEventListener('mouseout', () => {
-        btn.style.background = 'rgba(255, 255, 255, 0.05)';
-        btn.style.borderColor = 'rgba(212, 175, 55, 0.3)';
-        btn.style.transform = 'translateY(0)';
+        if (!btn.classList.contains('wrong')) {
+          btn.style.background = 'rgba(255, 255, 255, 0.05)';
+          btn.style.borderColor = 'rgba(212, 175, 55, 0.3)';
+          btn.style.transform = 'translateY(0)';
+        }
       });
 
       btn.addEventListener('click', () => {
-        // All initial options (Burger, Pizza, Mocktail) are incorrect!
+        // Mark this button as wrong
+        btn.classList.add('wrong');
+        btn.style.borderColor = '#ff4d4d';
+        btn.style.background = 'rgba(255, 77, 77, 0.1)';
+        btn.style.cursor = 'not-allowed';
+        btn.style.transform = 'translateY(0)';
+        
+        wrongCount++;
         quizFeedback.textContent = quizData.failure;
         quizFeedback.style.color = '#ff4d4d';
         quizFeedback.style.textShadow = 'none';
-        
-        // Highlight incorrect button
-        btn.style.borderColor = '#ff4d4d';
-        btn.style.background = 'rgba(255, 77, 77, 0.1)';
-        
-        // Reveal hidden correct soda option
-        if (hiddenSodaContainer) {
-          hiddenSodaContainer.style.display = 'block';
+
+        // After she's tried at least one wrong option, send the bird!
+        if (wrongCount >= 1 && birdSecretMsg) {
+          setTimeout(() => {
+            birdSecretMsg.style.display = 'block';
+          }, 800);
         }
       });
 
@@ -443,20 +456,32 @@ function populateEnding(ending) {
     });
   }
 
-  // Handle the Soda correct option reveal
+  // --- PRAN QUESTION: Both options are correct → unlock SODA ---
+  function unlockSoda() {
+    if (birdSecretMsg) birdSecretMsg.style.display = 'none';
+    if (hiddenSodaContainer) {
+      hiddenSodaContainer.style.display = 'block';
+    }
+    quizFeedback.textContent = '✅ Correct! Obviously Pran is the best! Here is your hint... 👀';
+    quizFeedback.style.color = '#ffd700';
+    quizFeedback.style.textShadow = '0 0 10px rgba(255,215,0,0.4)';
+  }
+
+  if (pranBtn) pranBtn.addEventListener('click', unlockSoda);
+  if (obvBtn) obvBtn.addEventListener('click', unlockSoda);
+
+  // --- SODA BUTTON: The real correct answer → massive celebration ---
   if (sodaBtn && quizFeedback && quizData) {
     sodaBtn.addEventListener('click', () => {
       quizFeedback.textContent = quizData.success;
       quizFeedback.style.color = '#ffd700';
       quizFeedback.style.textShadow = '0 0 15px rgba(255,215,0,0.6)';
       
-      // Highlight the Soda button beautifully
       sodaBtn.style.boxShadow = '0 0 25px #ffd700';
       
-      /* Shower massive confetti */
       if (typeof createConfetti === 'function') {
         createConfetti();
-        setTimeout(createConfetti, 500); // Double confetti!
+        setTimeout(createConfetti, 500);
       }
     });
   }
