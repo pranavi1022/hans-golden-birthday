@@ -201,3 +201,77 @@
     height: 30px;
   }
 }
+
+/* ============================================
+   ENHANCEMENTS — Quote Glow Animation
+   ============================================ */
+
+/* Pulsing golden text-shadow on the farewell quote */
+.ending-quote {
+  animation: quoteGlow 3s ease-in-out infinite;
+}
+
+@keyframes quoteGlow {
+  0%, 100% {
+    text-shadow:
+      0 0 10px rgba(212, 175, 55, 0.2),
+      0 0 20px rgba(212, 175, 55, 0.1);
+  }
+  50% {
+    text-shadow:
+      0 0 20px rgba(212, 175, 55, 0.5),
+      0 0 40px rgba(212, 175, 55, 0.3),
+      0 0 60px rgba(212, 175, 55, 0.15);
+  }
+}
+
+/* ============================================
+   ENHANCEMENTS — Badge Scale on Appearance
+   ============================================ */
+.ending-badge {
+  animation: badgeAppear 0.8s ease-out forwards, shimmerSlide 3s infinite;
+}
+
+@keyframes badgeAppear {
+  from {
+    transform: scale(0.85);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* ============================================
+   ENHANCEMENTS — Ending Content FadeInUp
+   ============================================ */
+.ending-content {
+  animation: endingFadeInUp 1s ease-out forwards;
+  opacity: 0;
+  transform: translateY(30px);
+}
+
+@keyframes endingFadeInUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ============================================
+   ENHANCEMENTS — Brighter Lantern Glow
+   ============================================ */
+.lantern {
+  box-shadow:
+    0 0 30px rgba(255, 215, 0, 0.6),
+    0 0 80px rgba(255, 215, 0, 0.25),
+    0 0 120px rgba(255, 215, 0, 0.1);
+}
+
+/* ============================================
+   ENHANCEMENTS — Stars Canvas Visibility
+   ============================================ */
+#stars-canvas {
+  opacity: 0.85;
+}

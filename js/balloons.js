@@ -6,7 +6,7 @@
 /**
  * initBalloons
  * Attaches click handlers to every .balloon-wrapper.
- * On pop: adds .popped class + spawns a gold particle burst.
+ * On pop: adds .popped class + spawns a gold particle burst + falling pieces.
  */
 function initBalloons() {
   const wrappers = document.querySelectorAll('.balloon-wrapper');
@@ -30,6 +30,9 @@ function initBalloons() {
 
       /* Mark as popped (CSS handles the visual transition) */
       wrapper.classList.add('popped');
+
+      /* Create falling balloon pieces */
+      createBalloonPieces(wrapper);
 
       /* Spawn a celebratory particle burst at the balloon's position */
       const rect = wrapper.getBoundingClientRect();
@@ -95,5 +98,39 @@ function createBalloonBurst(cx, cy) {
     setTimeout(() => {
       dot.remove();
     }, 900);
+  }
+}
+
+
+/* ----------------------------------------------------------
+ *  FALLING BALLOON PIECES
+ *  Creates small falling rubber pieces after a balloon pops.
+ * ---------------------------------------------------------- */
+
+/**
+ * createBalloonPieces
+ * @param {HTMLElement} wrapper — the .balloon-wrapper element
+ */
+function createBalloonPieces(wrapper) {
+  const rect = wrapper.querySelector('.balloon-body');
+  if (!rect) return;
+  const bounds = rect.getBoundingClientRect();
+  const PIECE_COUNT = 8;
+  const COLORS = ['#D4AF37', '#FFD700', '#B8960C', '#F5E6A3'];
+
+  for (let i = 0; i < PIECE_COUNT; i++) {
+    const piece = document.createElement('div');
+    piece.classList.add('balloon-piece');
+    const size = Math.random() * 12 + 6;
+    piece.style.width = `${size}px`;
+    piece.style.height = `${size}px`;
+    piece.style.backgroundColor = COLORS[Math.floor(Math.random() * COLORS.length)];
+    piece.style.left = `${Math.random() * 100}%`;
+    piece.style.top = `${Math.random() * 60 + 10}%`;
+    piece.style.setProperty('--fall-duration', `${Math.random() * 1 + 1.5}s`);
+    piece.style.setProperty('--fall-rotate', `${Math.random() * 720 - 360}deg`);
+    piece.style.setProperty('--fall-drift', `${Math.random() * 80 - 40}px`);
+    wrapper.appendChild(piece);
+    setTimeout(() => piece.remove(), 3000);
   }
 }

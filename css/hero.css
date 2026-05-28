@@ -136,7 +136,7 @@
 }
 
 /* ============================================
-   Music Toggle Button (fixed position)
+   Music Toggle Button (fixed position) — FALLBACK
    ============================================ */
 .music-toggle {
   position: fixed;
@@ -272,5 +272,107 @@
 
   .hero-scroll-indicator span {
     height: 30px;
+  }
+}
+
+/* ============================================
+   Music Player (enhanced mini-player)
+   ============================================ */
+.music-player {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: rgba(10, 10, 10, 0.85);
+  border: 1px solid rgba(212, 175, 55, 0.3);
+  border-radius: 30px;
+  padding: 6px 16px 6px 6px;
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  transition: all 0.3s ease;
+  max-width: 250px;
+}
+
+.music-player:hover {
+  border-color: var(--gold);
+  box-shadow: 0 0 20px rgba(212, 175, 55, 0.15);
+}
+
+.music-player-btn {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: rgba(212, 175, 55, 0.15);
+  border: 1px solid var(--gold);
+  color: var(--gold);
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: all 0.3s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.music-player-btn:hover {
+  background: var(--gold);
+  color: var(--black);
+}
+
+.music-player-btn.playing {
+  animation: pulse 1.5s infinite;
+}
+
+.music-player-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+  overflow: hidden;
+}
+
+.music-player-title {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.7rem;
+  color: var(--gold-light);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  letter-spacing: 0.5px;
+}
+
+.music-player-progress {
+  width: 100%;
+  height: 2px;
+  background: rgba(212, 175, 55, 0.2);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.music-player-progress-bar {
+  height: 100%;
+  width: 0%;
+  background: var(--gold);
+  border-radius: 2px;
+  transition: width 0.3s;
+}
+
+@media (max-width: 480px) {
+  .music-player {
+    max-width: 200px;
+    padding: 4px 12px 4px 4px;
+  }
+
+  .music-player-btn {
+    width: 34px;
+    height: 34px;
+    font-size: 0.95rem;
+  }
+
+  .music-player-title {
+    font-size: 0.6rem;
   }
 }

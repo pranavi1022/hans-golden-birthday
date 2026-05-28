@@ -120,3 +120,24 @@ function initStarsCanvas() {
 
   requestAnimationFrame(animate);
 }
+
+
+/* ==============================================================
+ *  SCROLL PROGRESS BAR
+ * ============================================================== */
+
+/**
+ * initScrollProgress
+ * Updates the #scroll-progress bar width based on page scroll position.
+ */
+function initScrollProgress() {
+  const bar = document.getElementById('scroll-progress');
+  if (!bar) return;
+
+  window.addEventListener('scroll', () => {
+    const scrollTop = window.scrollY || document.documentElement.scrollTop;
+    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+    const scrollPercent = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+    bar.style.width = `${scrollPercent}%`;
+  }, { passive: true });
+}

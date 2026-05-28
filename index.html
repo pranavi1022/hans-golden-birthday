@@ -23,15 +23,49 @@
     <link rel="stylesheet" href="css/ending.css">
     <!-- Animation utilities -->
     <link rel="stylesheet" href="css/animations.css">
+    <!-- New feature styles -->
+    <link rel="stylesheet" href="css/loading.css">
+    <link rel="stylesheet" href="css/lightbox.css">
+    <link rel="stylesheet" href="css/cursor.css">
+    <link rel="stylesheet" href="css/scrollbar.css">
 </head>
 <body>
 
     <!-- ============================================ -->
-    <!-- MUSIC TOGGLE (fixed position, always visible) -->
+    <!-- LOADING SCREEN (shown while content loads)   -->
     <!-- ============================================ -->
-    <button class="music-toggle" id="music-toggle" aria-label="Toggle background music" title="Toggle Music">
-        🔇
-    </button>
+    <div id="loading-screen">
+        <div class="loading-content">
+            <div class="loading-sparkles"></div>
+            <p class="loading-text">Loading Memories… ✨</p>
+            <div class="loading-bar">
+                <div class="loading-bar-fill"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================ -->
+    <!-- SCROLL PROGRESS BAR (golden, fixed top)      -->
+    <!-- ============================================ -->
+    <div id="scroll-progress"></div>
+
+    <!-- ============================================ -->
+    <!-- CURSOR SPARKLE CANVAS (desktop only)         -->
+    <!-- ============================================ -->
+    <canvas id="cursor-canvas"></canvas>
+
+    <!-- ============================================ -->
+    <!-- MUSIC PLAYER (floating mini player)          -->
+    <!-- ============================================ -->
+    <div class="music-player" id="music-player">
+        <button class="music-player-btn" id="music-player-btn" aria-label="Toggle background music" title="Toggle Music">🔇</button>
+        <div class="music-player-info">
+            <span class="music-player-title">Our Golden Memories 🎵</span>
+            <div class="music-player-progress">
+                <div class="music-player-progress-bar"></div>
+            </div>
+        </div>
+    </div>
 
     <!-- ============================================ -->
     <!-- SECTION 1: HERO                              -->
@@ -94,15 +128,15 @@
     </section>
 
     <!-- ============================================ -->
-    <!-- SECTION 3: MEMORY GALLERY                    -->
-    <!-- Photo grid — dynamically populated           -->
+    <!-- SECTION 3: MEMORY GALLERY (Scrapbook Style)  -->
+    <!-- Polaroid photos — dynamically populated       -->
     <!-- ============================================ -->
     <section id="gallery" class="section">
         <h2 class="section-title reveal">Our Golden Memories 📸</h2>
 
         <!-- Gallery grid is populated dynamically from messages.json by main.js -->
         <div class="gallery-grid" id="gallery-grid">
-            <!-- Categories and images injected here -->
+            <!-- Categories and polaroid images injected here -->
         </div>
     </section>
 
@@ -169,14 +203,24 @@
     </section>
 
     <!-- ============================================ -->
-    <!-- SECTION 6: LETTER                            -->
-    <!-- Handwritten card style letter                 -->
+    <!-- SECTION 6: LETTER (Envelope Opening)         -->
+    <!-- Click envelope → opens → reveals letter       -->
     <!-- ============================================ -->
     <section id="letter" class="section">
         <h2 class="section-title reveal">A Letter For You 💌</h2>
 
-        <div class="letter-container reveal">
-            <div class="letter-card">
+        <div class="envelope-container reveal" id="envelope-container">
+            <!-- Sealed Envelope (click to open) -->
+            <div class="envelope" id="envelope">
+                <div class="envelope-flap"></div>
+                <div class="envelope-body">
+                    <div class="envelope-seal" id="envelope-seal">💛</div>
+                    <p class="envelope-hint">Click to open 💌</p>
+                </div>
+            </div>
+
+            <!-- Letter Card (hidden initially, revealed after envelope opens) -->
+            <div class="letter-card" id="letter-card-inner" style="display: none;">
                 <!-- Decorative corners -->
                 <div class="letter-corner top-left"></div>
                 <div class="letter-corner top-right"></div>
@@ -219,8 +263,18 @@
     </section>
 
     <!-- ============================================ -->
+    <!-- LIGHTBOX (fullscreen photo viewer)           -->
+    <!-- ============================================ -->
+    <div id="lightbox" class="lightbox">
+        <button class="lightbox-close" id="lightbox-close" aria-label="Close photo">✕</button>
+        <img class="lightbox-img" id="lightbox-img" src="" alt="Full size photo">
+    </div>
+
+    <!-- ============================================ -->
     <!-- JAVASCRIPT MODULES                           -->
     <!-- ============================================ -->
+    <!-- Loading screen (must load first) -->
+    <script src="js/loading.js"></script>
     <!-- Particle systems -->
     <script src="js/particles.js"></script>
     <script src="js/animations.js"></script>
@@ -229,6 +283,9 @@
     <script src="js/slider.js"></script>
     <script src="js/wish.js"></script>
     <script src="js/music.js"></script>
+    <!-- New feature modules -->
+    <script src="js/cursor.js"></script>
+    <script src="js/lightbox.js"></script>
     <!-- Main app (must load last — initializes everything) -->
     <script src="js/main.js"></script>
 

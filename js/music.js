@@ -1,43 +1,53 @@
 /* ============================================================
- *  music.js — Background music toggle (play / pause)
+ *  music.js — Mini music player (play / pause + progress bar)
  *  Audio source: assets/music/birthday.mp3
  * ============================================================ */
 
 /**
  * initMusic
- * Creates an <audio> element, wires up the .music-toggle button,
- * and handles play/pause with graceful error handling.
+ * Wires up the #music-player mini-player with play/pause,
+ * progress bar, and title updates.
  */
 function initMusic() {
-  const toggleBtn = document.querySelector('.music-toggle');
-  if (!toggleBtn) return;
+  const player = document.getElementById('music-player');
+  const btn = document.getElementById('music-player-btn');
+  if (!btn) return;
 
-  /* --- Create the audio element programmatically --- */
   const audio = new Audio('assets/music/birthday.mp3');
-  audio.loop    = true;
-  audio.volume  = 0.5;                                             // default volume
-
+  audio.loop = true;
+  audio.volume = 0.5;
   let isPlaying = false;
 
-  /* --- Toggle handler --- */
-  toggleBtn.addEventListener('click', async () => {
+  const titleEl = player ? player.querySelector('.music-player-title') : null;
+  const progressBar = player ? player.querySelector('.music-player-progress-bar') : null;
+
+  /* Update progress bar */
+  if (progressBar) {
+    audio.addEventListener('timeupdate', () => {
+      if (audio.duration) {
+        const pct = (audio.currentTime / audio.duration) * 100;
+        progressBar.style.width = `${pct}%`;
+      }
+    });
+  }
+
+  btn.addEventListener('click', async () => {
     if (!isPlaying) {
-      /* ▶ PLAY */
       try {
         await audio.play();
         isPlaying = true;
-        toggleBtn.classList.add('playing');
-        toggleBtn.textContent = '🔊';                             // speaker-on icon
+        btn.classList.add('playing');
+        btn.textContent = '🔊';
+        if (titleEl) titleEl.textContent = 'Playing: Our Golden Memories 🎵';
       } catch (err) {
-        /* Browsers may block autoplay; just log, don't break UX */
-        console.warn('[music.js] Playback blocked:', err.message);
+        console.warn('[music] Playback blocked:', err.message);
       }
     } else {
-      /* ⏸ PAUSE */
       audio.pause();
       isPlaying = false;
-      toggleBtn.classList.remove('playing');
-      toggleBtn.textContent = '🔇';                               // muted icon
+      btn.classList.remove('playing');
+      btn.textContent = '🔇';
+      if (titleEl) titleEl.textContent = 'Paused 🎵';
     }
   });
 }

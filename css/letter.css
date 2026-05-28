@@ -1,12 +1,115 @@
 /* ============================================
-   LETTER.CSS — Personal Letter Section
-   Elegant card with seal, corners, cursive text
+   LETTER.CSS — Envelope Opening + Personal Letter
+   Interactive envelope that opens to reveal letter
    ============================================ */
 
 /* --- Section Background --- */
 #letter {
   background: var(--dark-gradient);
   padding: 100px 20px;
+}
+
+/* ============================================
+   Envelope Container (perspective wrapper)
+   ============================================ */
+.envelope-container {
+  perspective: 1000px;
+  max-width: 600px;
+  width: 90%;
+  margin: 0 auto;
+}
+
+/* ============================================
+   Envelope
+   ============================================ */
+.envelope {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 3 / 2;
+  cursor: pointer;
+  transition: transform 0.3s;
+}
+
+.envelope:hover {
+  transform: scale(1.02);
+}
+
+/* --- Envelope body (gold background) --- */
+.envelope-body {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, #c9a030, #D4AF37, #e6c44a);
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+  position: relative;
+  overflow: hidden;
+}
+
+/* --- Bottom triangle flap (decorative) --- */
+.envelope-body::before {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 50%;
+  background: linear-gradient(135deg, #b8920a, #c9a030);
+  clip-path: polygon(0 100%, 50% 30%, 100% 100%);
+}
+
+/* --- Wax seal on envelope --- */
+.envelope-seal {
+  font-size: 2.5rem;
+  z-index: 2;
+  width: 60px;
+  height: 60px;
+  background: radial-gradient(circle, #8B0000, #600000);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+}
+
+/* --- "Click to open" hint --- */
+.envelope-hint {
+  font-family: 'Playfair Display', serif;
+  color: #1a1a1a;
+  margin-top: 15px;
+  font-size: 1rem;
+  z-index: 2;
+  letter-spacing: 2px;
+  animation: hintPulse 2s infinite;
+}
+
+/* --- Top flap (folds back on open) --- */
+.envelope-flap {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 50%;
+  background: linear-gradient(180deg, #d4b040, #c9a030);
+  clip-path: polygon(0 0, 50% 100%, 100% 0);
+  transform-origin: top center;
+  transition: transform 0.8s ease;
+  z-index: 3;
+}
+
+/* ============================================
+   Envelope Opened State
+   ============================================ */
+.envelope.opened .envelope-flap {
+  transform: rotateX(180deg);
+}
+
+.envelope.opened {
+  pointer-events: none;
+  animation: envelopeFadeUp 0.8s 0.5s forwards;
 }
 
 /* ============================================
@@ -19,7 +122,7 @@
 }
 
 /* ============================================
-   Letter Card
+   Letter Card (revealed after envelope opens)
    ============================================ */
 .letter-card {
   background: linear-gradient(135deg, #1a1510, #2a2015, #1a1510);
@@ -31,6 +134,12 @@
     0 20px 60px rgba(0, 0, 0, 0.5),
     inset 0 1px 0 rgba(212, 175, 55, 0.1);
   overflow: hidden;
+  animation: letterReveal 0.8s ease forwards;
+  opacity: 0;
+  transform: translateY(30px);
+  max-width: 700px;
+  width: 90%;
+  margin: 0 auto;
 }
 
 /* --- Subtle texture overlay for parchment feel --- */
@@ -136,6 +245,28 @@
 }
 
 /* ============================================
+   Keyframes
+   ============================================ */
+@keyframes hintPulse {
+  0%, 100% { opacity: 0.7; }
+  50% { opacity: 1; }
+}
+
+@keyframes envelopeFadeUp {
+  to {
+    opacity: 0;
+    transform: translateY(-50px) scale(0.9);
+  }
+}
+
+@keyframes letterReveal {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ============================================
    Letter Responsive
    ============================================ */
 
@@ -143,6 +274,22 @@
 @media (max-width: 768px) {
   #letter {
     padding: 70px 15px;
+  }
+
+  .envelope {
+    max-width: 400px;
+    margin: 0 auto;
+  }
+
+  .envelope-seal {
+    width: 50px;
+    height: 50px;
+    font-size: 2rem;
+  }
+
+  .envelope-hint {
+    font-size: 0.85rem;
+    letter-spacing: 1px;
   }
 
   .letter-card {
@@ -168,6 +315,20 @@
     padding: 50px 12px;
   }
 
+  .envelope {
+    max-width: 300px;
+  }
+
+  .envelope-seal {
+    width: 44px;
+    height: 44px;
+    font-size: 1.6rem;
+  }
+
+  .envelope-hint {
+    font-size: 0.75rem;
+  }
+
   .letter-card {
     padding: 35px 25px;
     border-radius: 12px;
@@ -188,7 +349,6 @@
   .letter-corner {
     width: 35px;
     height: 35px;
-    top: 10px;
   }
 
   .letter-corner.top-left { top: 10px; left: 10px; }

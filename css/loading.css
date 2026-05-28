@@ -1,0 +1,122 @@
+/* ==========================================================
+   Loading Screen Overlay
+   Full-screen premium loading overlay displayed before the
+   main website content appears. Features a pulsing gold text,
+   animated progress bar, and sparkle dot ring.
+   ========================================================== */
+
+/* ---------- Overlay Container ---------- */
+#loading-screen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #0A0A0A;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 99999;
+  transition: opacity 0.8s ease, visibility 0.8s ease;
+}
+
+/* Hidden state – fades out then becomes non-interactive */
+#loading-screen.hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+/* ---------- Content Wrapper ---------- */
+.loading-content {
+  text-align: center;
+}
+
+/* ---------- Pulsing Gold Title ---------- */
+.loading-text {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1.5rem, 4vw, 2.5rem);
+  color: #D4AF37;
+  animation: loadingPulse 1.5s ease-in-out infinite;
+  margin-bottom: 30px;
+  letter-spacing: 0.05em;
+  text-shadow: 0 0 20px rgba(212, 175, 55, 0.3);
+}
+
+/* ---------- Progress Bar ---------- */
+.loading-bar {
+  width: 200px;
+  height: 3px;
+  background: rgba(212, 175, 55, 0.2);
+  border-radius: 3px;
+  margin: 0 auto;
+  overflow: hidden;
+}
+
+.loading-bar-fill {
+  width: 0%;
+  height: 100%;
+  background: linear-gradient(90deg, #D4AF37, #FFD700);
+  border-radius: 3px;
+  animation: loadingFill 2s ease-in-out forwards;
+  box-shadow: 0 0 8px rgba(212, 175, 55, 0.5);
+}
+
+/* ---------- Sparkle Dots Ring ---------- */
+.loading-sparkles {
+  position: relative;
+  width: 100px;
+  height: 100px;
+  margin: 0 auto 20px;
+}
+
+.loading-sparkle {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: #FFD700;
+  animation: loadingSparkle 1.5s ease-in-out infinite;
+  box-shadow: 0 0 6px rgba(255, 215, 0, 0.6);
+}
+
+/* Staggered delays for each sparkle in the ring (set via JS) */
+.loading-sparkle:nth-child(1) { animation-delay: 0s; }
+.loading-sparkle:nth-child(2) { animation-delay: 0.15s; }
+.loading-sparkle:nth-child(3) { animation-delay: 0.3s; }
+.loading-sparkle:nth-child(4) { animation-delay: 0.45s; }
+.loading-sparkle:nth-child(5) { animation-delay: 0.6s; }
+.loading-sparkle:nth-child(6) { animation-delay: 0.75s; }
+.loading-sparkle:nth-child(7) { animation-delay: 0.9s; }
+.loading-sparkle:nth-child(8) { animation-delay: 1.05s; }
+
+/* ---------- Keyframe Animations ---------- */
+
+/* Gentle opacity pulse for the loading text */
+@keyframes loadingPulse {
+  0%, 100% { opacity: 0.6; text-shadow: 0 0 20px rgba(212, 175, 55, 0.2); }
+  50%      { opacity: 1;   text-shadow: 0 0 30px rgba(212, 175, 55, 0.5); }
+}
+
+/* Progress bar fills from 0 → 100% */
+@keyframes loadingFill {
+  0%   { width: 0%; }
+  100% { width: 100%; }
+}
+
+/* Sparkle dots scale in and out */
+@keyframes loadingSparkle {
+  0%, 100% { opacity: 0; transform: scale(0); }
+  50%      { opacity: 1; transform: scale(1); }
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 480px) {
+  .loading-sparkles {
+    width: 80px;
+    height: 80px;
+  }
+  .loading-bar {
+    width: 160px;
+  }
+}

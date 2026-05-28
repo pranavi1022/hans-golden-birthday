@@ -51,10 +51,64 @@ document.addEventListener('DOMContentLoaded', async () => {
     /* Floating lanterns (ending section) */
     createLanterns();
 
+    /* --- Enhanced modules --- */
+    initCursorSparkle();   // cursor sparkle trail
+    initLightbox();        // photo lightbox
+    initScrollProgress();  // scroll progress bar
+    initEnvelopeLetter();  // envelope opening animation
+
+    /* Hide loading screen after everything is ready */
+    setTimeout(hideLoading, 500);
+
   } catch (err) {
     console.error('[main.js] Initialisation error:', err);
+    hideLoading();
   }
 });
+
+
+/* ==============================================================
+ *  HIDE LOADING SCREEN
+ * ============================================================== */
+
+/**
+ * hideLoading
+ * Fades out and removes the loading overlay if present.
+ */
+function hideLoading() {
+  const loader = document.getElementById('loading-screen');
+  if (!loader) return;
+  loader.style.opacity = '0';
+  loader.style.transition = 'opacity 0.5s ease';
+  setTimeout(() => {
+    loader.style.display = 'none';
+  }, 500);
+}
+
+
+/* ==============================================================
+ *  ENVELOPE → LETTER REVEAL
+ * ============================================================== */
+
+/**
+ * initEnvelopeLetter
+ * Handles the envelope click → open → fade → letter reveal animation.
+ */
+function initEnvelopeLetter() {
+  const envelope = document.getElementById('envelope');
+  const letterCard = document.getElementById('letter-card-inner');
+  if (!envelope || !letterCard) return;
+
+  envelope.addEventListener('click', () => {
+    if (envelope.classList.contains('opened')) return;
+    envelope.classList.add('opened');
+    /* After envelope fades, show the letter */
+    setTimeout(() => {
+      envelope.style.display = 'none';
+      letterCard.style.display = 'block';
+    }, 1300);
+  });
+}
 
 
 /* ==============================================================

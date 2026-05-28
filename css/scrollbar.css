@@ -1,0 +1,21 @@
+/* ==========================================================
+   Scroll Progress Indicator
+   A thin, glowing golden bar fixed to the top of the viewport.
+   Its width tracks the user's scroll position (0 → 100%).
+   Width is updated via JS (scroll event).
+   ========================================================== */
+
+#scroll-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 3px;
+  width: 0%;
+  background: linear-gradient(90deg, #D4AF37, #FFD700, #F5E6A3);
+  z-index: 10001;
+  transition: width 0.1s linear;
+  box-shadow: 0 0 10px rgba(212, 175, 55, 0.5),
+              0 0 5px rgba(255, 215, 0, 0.3);
+  border-radius: 0 2px 2px 0;
+  pointer-events: none; /* Non-interactive decoration */
+}

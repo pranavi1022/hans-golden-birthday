@@ -1,6 +1,6 @@
 /* ============================================
-   GALLERY.CSS — Photo Gallery Section
-   Grid layout with hover effects and overlays
+   GALLERY.CSS — Polaroid / Scrapbook Photo Gallery
+   Scattered polaroid-style cards with tape strips
    ============================================ */
 
 /* --- Section Background --- */
@@ -13,9 +13,6 @@
    Gallery Grid Layout
    ============================================ */
 .gallery-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 30px;
   max-width: 1200px;
   width: 100%;
 }
@@ -24,7 +21,7 @@
    Category Grouping
    ============================================ */
 .gallery-category {
-  margin-bottom: 50px;
+  margin-bottom: 60px;
 }
 
 /* --- Category heading with gold left border --- */
@@ -32,49 +29,100 @@
   font-family: 'Playfair Display', serif;
   font-size: 1.5rem;
   color: var(--gold);
-  margin-bottom: 25px;
+  margin-bottom: 30px;
   padding-left: 15px;
   border-left: 3px solid var(--gold);
 }
 
-/* --- Images grid within a category --- */
+/* --- Images grid within a category (flex for scatter look) --- */
 .category-images {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-  gap: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 30px;
+  justify-content: center;
 }
 
 /* ============================================
-   Gallery Item (individual photo card)
+   Gallery Item — Polaroid Style
    ============================================ */
 .gallery-item {
   position: relative;
-  border-radius: 12px;
-  overflow: hidden;
-  aspect-ratio: 4 / 5;
-  border: 2px solid rgba(212, 175, 55, 0.2);
+  background: #FFFFFF;
+  padding: 10px 10px 40px 10px;
+  border-radius: 4px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+  width: 220px;
   transition: all 0.4s ease;
-  background: var(--black-light);
+  cursor: pointer;
 }
 
-/* --- Hover: lift + gold border + glow shadow --- */
+/* --- Random rotations for scattered scrapbook feel --- */
+.gallery-item:nth-child(odd) {
+  transform: rotate(-2deg);
+}
+
+.gallery-item:nth-child(even) {
+  transform: rotate(2deg);
+}
+
+.gallery-item:nth-child(3n) {
+  transform: rotate(-3deg);
+}
+
+.gallery-item:nth-child(4n) {
+  transform: rotate(1.5deg);
+}
+
+.gallery-item:nth-child(5n) {
+  transform: rotate(-1deg);
+}
+
+.gallery-item:nth-child(7n) {
+  transform: rotate(3deg);
+}
+
+/* --- Hover: straighten, scale, gold glow --- */
 .gallery-item:hover {
-  transform: translateY(-8px);
-  border-color: var(--gold);
-  box-shadow: 0 20px 40px rgba(212, 175, 55, 0.2);
+  transform: rotate(0deg) scale(1.08);
+  box-shadow:
+    0 8px 30px rgba(0, 0, 0, 0.4),
+    0 0 25px rgba(212, 175, 55, 0.3);
+  z-index: 10;
 }
 
-/* --- Image fills the card --- */
+/* --- Tape strip at the top (pseudo-element) --- */
+.gallery-item::before {
+  content: '';
+  position: absolute;
+  top: -8px;
+  left: 50%;
+  transform: translateX(-50%) rotate(-2deg);
+  width: 50px;
+  height: 18px;
+  background: rgba(212, 175, 55, 0.35);
+  border-radius: 2px;
+  z-index: 5;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+}
+
+/* --- Alternate tape rotation --- */
+.gallery-item:nth-child(even)::before {
+  transform: translateX(-50%) rotate(3deg);
+}
+
+.gallery-item:nth-child(3n)::before {
+  transform: translateX(-60%) rotate(-5deg);
+}
+
+/* ============================================
+   Polaroid Image
+   ============================================ */
 .gallery-item img {
   width: 100%;
-  height: 100%;
+  height: 200px;
   object-fit: cover;
-  transition: transform 0.4s ease;
-}
-
-/* --- Subtle zoom on hover --- */
-.gallery-item:hover img {
-  transform: scale(1.05);
+  border-radius: 2px;
+  display: block;
 }
 
 /* ============================================
@@ -82,37 +130,31 @@
    ============================================ */
 .gallery-placeholder {
   width: 100%;
-  height: 100%;
+  height: 200px;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(135deg, var(--black-light), var(--black-medium));
+  background: linear-gradient(135deg, #1a1a1a, #2a2a2a);
   color: var(--gold);
   font-family: 'Playfair Display', serif;
-  font-size: 1rem;
+  font-size: 0.9rem;
   text-align: center;
-  padding: 20px;
+  padding: 15px;
+  border-radius: 2px;
 }
 
 /* ============================================
-   Gallery Overlay (caption on hover)
+   Gallery Overlay (caption on polaroid bottom)
    ============================================ */
 .gallery-overlay {
   position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  padding: 15px;
-  background: linear-gradient(transparent, rgba(0, 0, 0, 0.8));
-  color: var(--white);
-  font-size: 0.85rem;
-  opacity: 0;
-  transition: opacity 0.3s ease;
-}
-
-/* --- Show overlay on hover --- */
-.gallery-item:hover .gallery-overlay {
-  opacity: 1;
+  bottom: 10px;
+  left: 10px;
+  right: 10px;
+  text-align: center;
+  color: #333;
+  font-family: 'Dancing Script', cursive;
+  font-size: 0.9rem;
 }
 
 /* ============================================
@@ -125,18 +167,25 @@
     padding: 70px 15px;
   }
 
-  .gallery-grid {
-    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-    gap: 20px;
+  .gallery-item {
+    width: 180px;
+    padding: 8px 8px 30px 8px;
+  }
+
+  .gallery-item img {
+    height: 170px;
+  }
+
+  .gallery-placeholder {
+    height: 170px;
   }
 
   .category-images {
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    gap: 15px;
+    gap: 20px;
   }
 
   .gallery-category {
-    margin-bottom: 35px;
+    margin-bottom: 40px;
   }
 }
 
@@ -146,17 +195,30 @@
     padding: 50px 12px;
   }
 
-  .gallery-grid {
-    grid-template-columns: 1fr 1fr;
-    gap: 12px;
+  .gallery-item {
+    width: 160px;
+    padding: 6px 6px 25px 6px;
+  }
+
+  .gallery-item img {
+    height: 150px;
+  }
+
+  .gallery-placeholder {
+    height: 150px;
+    font-size: 0.8rem;
   }
 
   .category-images {
-    grid-template-columns: 1fr 1fr;
-    gap: 10px;
+    gap: 15px;
   }
 
   .category-title {
     font-size: 1.2rem;
+  }
+
+  .gallery-item::before {
+    width: 40px;
+    height: 14px;
   }
 }
