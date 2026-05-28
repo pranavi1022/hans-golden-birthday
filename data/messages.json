@@ -17,7 +17,7 @@
     "categories": [
       {
         "name": "Little Hans to Golden Girl",
-        "emoji": "🧒✨",
+        "emoji": "👧✨",
         "images": [
           "assets/images/childhood/1.jpg",
           "assets/images/childhood/2.jpg",
@@ -80,15 +80,15 @@
     "badge": "✨ 19 on 19 ✨",
     "hearts": "💛✨💛",
     "quiz": {
-      "question": "What is our ultimate twin soul agreement? 🤔",
+      "question": "What does Hans like to drink/eat the most? 😋",
       "options": [
-        "To buy matching outfits and look cute",
-        "To stay best friends forever, take polaroids, and go on infinite chaotic trips 🌎💛",
-        "To fight over who gets the last slice of cake"
+        "🍔 Burger",
+        "🍕 Pizza",
+        "🍹 Mocktail"
       ],
-      "correctIndex": 1,
-      "success": "Exactly! You passed the test! Telepathy levels: 100% 🔮✨",
-      "failure": "Wrong! Are you sure you are my twin? Try again! 🧐"
+      "correctIndex": -1,
+      "success": "YESSS! 🍹 SODA IS HER TRUE LOVE! 100% Correct! 😂💛🎉",
+      "failure": "WRONG! ❌ Burger? Pizza? Mocktail? Seriously? Think deeper... 🧐"
     }
   }
 }

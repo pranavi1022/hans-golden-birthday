@@ -380,11 +380,13 @@ function populateEnding(ending) {
     });
   }
 
-  /* --- 3. TWIN TELEPATHY QUIZ INTERACTION --- */
+  /* --- 3. FOOD QUIZ WITH HIDDEN SODA TWIST --- */
   const quizData = ending.quiz;
   const quizQuestion = document.getElementById('quiz-question');
   const quizOptionsContainer = document.getElementById('quiz-options');
   const quizFeedback = document.getElementById('quiz-feedback');
+  const hiddenSodaContainer = document.getElementById('hidden-soda-container');
+  const sodaBtn = document.getElementById('soda-btn');
 
   if (quizData && quizQuestion && quizOptionsContainer && quizFeedback) {
     quizQuestion.textContent = quizData.question;
@@ -422,23 +424,40 @@ function populateEnding(ending) {
       });
 
       btn.addEventListener('click', () => {
-        if (idx === quizData.correctIndex) {
-          quizFeedback.textContent = quizData.success;
-          quizFeedback.style.color = '#ffd700';
-          quizFeedback.style.textShadow = '0 0 10px rgba(255,215,0,0.5)';
-          
-          /* Shower confetti */
-          if (typeof createConfetti === 'function') {
-            createConfetti();
-          }
-        } else {
-          quizFeedback.textContent = quizData.failure;
-          quizFeedback.style.color = '#ff4d4d';
-          quizFeedback.style.textShadow = 'none';
+        // All initial options (Burger, Pizza, Mocktail) are incorrect!
+        quizFeedback.textContent = quizData.failure;
+        quizFeedback.style.color = '#ff4d4d';
+        quizFeedback.style.textShadow = 'none';
+        
+        // Highlight incorrect button
+        btn.style.borderColor = '#ff4d4d';
+        btn.style.background = 'rgba(255, 77, 77, 0.1)';
+        
+        // Reveal hidden correct soda option
+        if (hiddenSodaContainer) {
+          hiddenSodaContainer.style.display = 'block';
         }
       });
 
       quizOptionsContainer.appendChild(btn);
+    });
+  }
+
+  // Handle the Soda correct option reveal
+  if (sodaBtn && quizFeedback && quizData) {
+    sodaBtn.addEventListener('click', () => {
+      quizFeedback.textContent = quizData.success;
+      quizFeedback.style.color = '#ffd700';
+      quizFeedback.style.textShadow = '0 0 15px rgba(255,215,0,0.6)';
+      
+      // Highlight the Soda button beautifully
+      sodaBtn.style.boxShadow = '0 0 25px #ffd700';
+      
+      /* Shower massive confetti */
+      if (typeof createConfetti === 'function') {
+        createConfetti();
+        setTimeout(createConfetti, 500); // Double confetti!
+      }
     });
   }
 }
