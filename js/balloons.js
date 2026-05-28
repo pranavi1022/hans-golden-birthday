@@ -11,10 +11,22 @@
 function initBalloons() {
   const wrappers = document.querySelectorAll('.balloon-wrapper');
 
+  /* --- Pop sound effect ---
+   * Place your pop sound file at: assets/music/pop.mp3
+   * Supported formats: .mp3, .wav, .ogg */
+  const popSound = new Audio('assets/music/pop.mp3');
+  popSound.volume = 0.6;
+
   wrappers.forEach((wrapper) => {
     wrapper.addEventListener('click', () => {
       /* Guard: don't re-pop */
       if (wrapper.classList.contains('popped')) return;
+
+      /* Play pop sound */
+      try {
+        popSound.currentTime = 0;                                  // reset so it can replay
+        popSound.play().catch(() => {});                            // graceful if no file yet
+      } catch (e) { /* no sound file yet — that's fine */ }
 
       /* Mark as popped (CSS handles the visual transition) */
       wrapper.classList.add('popped');

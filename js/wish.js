@@ -16,9 +16,21 @@ function initWish() {
 
   if (!blowBtn) return;
 
+  /* --- Blow sound effect ---
+   * Place your blow/whoosh sound file at: assets/music/blow.mp3
+   * Supported formats: .mp3, .wav, .ogg */
+  const blowSound = new Audio('assets/music/blow.mp3');
+  blowSound.volume = 0.7;
+
   blowBtn.addEventListener('click', () => {
     /* Prevent repeated clicks */
     blowBtn.disabled = true;
+
+    /* Play blow sound */
+    try {
+      blowSound.currentTime = 0;
+      blowSound.play().catch(() => {});
+    } catch (e) { /* no sound file yet — that's fine */ }
 
     /* --- Stagger candle blow-out (100 ms apart) --- */
     candles.forEach((candle, index) => {
