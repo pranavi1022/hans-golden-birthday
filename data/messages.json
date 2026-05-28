@@ -78,6 +78,17 @@
   "ending": {
     "quote": "Forever agreement. No way back 🫂💖",
     "badge": "✨ 19 on 19 ✨",
-    "hearts": "💛✨💛"
+    "hearts": "💛✨💛",
+    "quiz": {
+      "question": "What is our ultimate twin soul agreement? 🤔",
+      "options": [
+        "To buy matching outfits and look cute",
+        "To stay best friends forever, take polaroids, and go on infinite chaotic trips 🌎💛",
+        "To fight over who gets the last slice of cake"
+      ],
+      "correctIndex": 1,
+      "success": "Exactly! You passed the test! Telepathy levels: 100% 🔮✨",
+      "failure": "Wrong! Are you sure you are my twin? Try again! 🧐"
+    }
   }
 }

@@ -92,22 +92,58 @@ function hideLoading() {
 
 /**
  * initEnvelopeLetter
- * Handles the envelope click → open → fade → letter reveal animation.
+ * Handles the envelope click → open → password code screen → correct '1919' → letter reveal.
  */
 function initEnvelopeLetter() {
   const envelope = document.getElementById('envelope');
+  const passContainer = document.getElementById('password-container');
+  const passInput = document.getElementById('letter-password');
+  const passBtn = document.getElementById('password-btn');
+  const passError = document.getElementById('password-error');
   const letterCard = document.getElementById('letter-card-inner');
+  
   if (!envelope || !letterCard) return;
 
   envelope.addEventListener('click', () => {
     if (envelope.classList.contains('opened')) return;
     envelope.classList.add('opened');
-    /* After envelope fades, show the letter */
+    /* After envelope fades, show the password screen */
     setTimeout(() => {
       envelope.style.display = 'none';
-      letterCard.style.display = 'block';
+      if (passContainer) {
+        passContainer.style.display = 'block';
+      } else {
+        letterCard.style.display = 'block';
+      }
     }, 1300);
   });
+
+  if (passBtn && passInput) {
+    const checkPassword = () => {
+      const enteredCode = passInput.value.trim();
+      if (enteredCode === '1919') {
+        passContainer.style.display = 'none';
+        letterCard.style.display = 'block';
+        
+        /* Create confetti burst to celebrate unlocking */
+        if (typeof createConfetti === 'function') {
+          createConfetti();
+        }
+      } else {
+        passError.style.opacity = '1';
+        passInput.style.borderColor = '#ff4d4d';
+        setTimeout(() => {
+          passError.style.opacity = '0';
+          passInput.style.borderColor = '#D4AF37';
+        }, 2500);
+      }
+    };
+
+    passBtn.addEventListener('click', checkPassword);
+    passInput.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') checkPassword();
+    });
+  }
 }
 
 
@@ -318,6 +354,10 @@ function populateLetter(letterData, letterText) {
  * populateEnding — sets quote, badge, and hearts.
  * Editable keys → ending.quote, ending.badge, ending.hearts
  */
+/**
+ * populateEnding — sets quote, badge, hearts, agreement checkbox, and quiz.
+ * Editable keys → ending.quote, ending.badge, ending.hearts, ending.quiz
+ */
 function populateEnding(ending) {
   if (!ending) return;
 
@@ -328,6 +368,79 @@ function populateEnding(ending) {
   if (quoteEl  && ending.quote)  quoteEl.textContent  = ending.quote;
   if (badgeEl  && ending.badge)  badgeEl.textContent   = ending.badge;
   if (heartsEl && ending.hearts) heartsEl.textContent  = ending.hearts;
+
+  /* --- 1. FUNNY FOREVER AGREEMENT CHECKBOX INTERACTION --- */
+  const agreementCheckbox = document.getElementById('forever-agreement');
+  if (agreementCheckbox) {
+    agreementCheckbox.addEventListener('change', () => {
+      if (!agreementCheckbox.checked) {
+        alert('⚠️ Action Denied! Friendship termination clause is not permitted. Agreement auto-renewed! 😉🫂');
+        agreementCheckbox.checked = true;
+      }
+    });
+  }
+
+  /* --- 3. TWIN TELEPATHY QUIZ INTERACTION --- */
+  const quizData = ending.quiz;
+  const quizQuestion = document.getElementById('quiz-question');
+  const quizOptionsContainer = document.getElementById('quiz-options');
+  const quizFeedback = document.getElementById('quiz-feedback');
+
+  if (quizData && quizQuestion && quizOptionsContainer && quizFeedback) {
+    quizQuestion.textContent = quizData.question;
+    quizOptionsContainer.innerHTML = ''; // clear initial
+
+    quizData.options.forEach((optionText, idx) => {
+      const btn = document.createElement('button');
+      btn.textContent = optionText;
+      
+      // Inline styles for high-fidelity interactive buttons
+      Object.assign(btn.style, {
+        background: 'rgba(255, 255, 255, 0.05)',
+        border: '1px solid rgba(212, 175, 55, 0.3)',
+        borderRadius: '8px',
+        color: '#F5E6A3',
+        padding: '12px 20px',
+        width: '100%',
+        cursor: 'pointer',
+        fontSize: '0.9rem',
+        transition: 'all 0.3s ease',
+        textAlign: 'center',
+        fontFamily: "'Inter', sans-serif"
+      });
+
+      btn.addEventListener('mouseover', () => {
+        btn.style.background = 'rgba(212, 175, 55, 0.15)';
+        btn.style.borderColor = 'var(--gold)';
+        btn.style.transform = 'translateY(-2px)';
+      });
+
+      btn.addEventListener('mouseout', () => {
+        btn.style.background = 'rgba(255, 255, 255, 0.05)';
+        btn.style.borderColor = 'rgba(212, 175, 55, 0.3)';
+        btn.style.transform = 'translateY(0)';
+      });
+
+      btn.addEventListener('click', () => {
+        if (idx === quizData.correctIndex) {
+          quizFeedback.textContent = quizData.success;
+          quizFeedback.style.color = '#ffd700';
+          quizFeedback.style.textShadow = '0 0 10px rgba(255,215,0,0.5)';
+          
+          /* Shower confetti */
+          if (typeof createConfetti === 'function') {
+            createConfetti();
+          }
+        } else {
+          quizFeedback.textContent = quizData.failure;
+          quizFeedback.style.color = '#ff4d4d';
+          quizFeedback.style.textShadow = 'none';
+        }
+      });
+
+      quizOptionsContainer.appendChild(btn);
+    });
+  }
 }
 
 

@@ -219,7 +219,17 @@
                 </div>
             </div>
 
-            <!-- Letter Card (hidden initially, revealed after envelope opens) -->
+            <!-- Password Prompt Container (hidden initially, revealed after envelope opens) -->
+            <div id="password-container" class="glass reveal" style="display: none; max-width: 400px; margin: 0 auto; padding: 30px; text-align: center;">
+                <p style="font-family: 'Playfair Display', serif; color: var(--gold); margin-bottom: 20px; font-size: 1.2rem; letter-spacing: 1px;">Enter the Secret Code 🔒</p>
+                <div style="display: flex; gap: 10px; justify-content: center; align-items: center; margin-bottom: 15px;">
+                    <input type="password" id="letter-password" placeholder="Hint: Twin age + Twin date 💛" style="background: rgba(255,255,255,0.05); border: 1px solid var(--gold); border-radius: 8px; padding: 12px 15px; color: #FFF; text-align: center; font-size: 1rem; width: 100%; max-width: 220px; outline: none; transition: border 0.3s;" onfocus="this.style.borderColor='#FFD700'" onblur="this.style.borderColor='#D4AF37'">
+                    <button id="password-btn" style="background: var(--gold-gradient); border: none; border-radius: 8px; color: #000; font-weight: 600; padding: 12px 20px; cursor: pointer; transition: transform 0.2s;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">Unlock</button>
+                </div>
+                <p id="password-error" style="color: #ff4d4d; font-size: 0.85rem; height: 15px; margin: 0; opacity: 0; transition: opacity 0.3s;">Incorrect code. Try again!</p>
+            </div>
+
+            <!-- Letter Card (hidden initially, revealed after envelope opens and correct password entered) -->
             <div class="letter-card" id="letter-card-inner" style="display: none;">
                 <!-- Decorative corners -->
                 <div class="letter-corner top-left"></div>
@@ -250,15 +260,34 @@
         <div class="lanterns-container" id="lanterns-container"></div>
 
         <!-- Ending content -->
-        <div class="ending-content reveal">
+        <div class="ending-content reveal" style="display: flex; flex-direction: column; align-items: center; gap: 40px; width: 90%; max-width: 600px; margin: 0 auto;">
             <!-- Final quote — populated from messages.json -->
-            <p class="ending-quote" id="ending-quote"></p>
+            <p class="ending-quote" id="ending-quote" style="margin: 0;"></p>
+
+            <!-- 1. FUNNY FOREVER AGREEMENT CHECKBOX -->
+            <div class="glass" style="padding: 25px; border-radius: 12px; width: 100%; text-align: left; position: relative;">
+                <h4 style="font-family: 'Playfair Display', serif; color: var(--gold); margin: 0 0 15px 0; font-size: 1.1rem; letter-spacing: 1px; display: flex; align-items: center; gap: 8px;">📜 Legal Besties Agreement</h4>
+                <label style="display: flex; align-items: flex-start; gap: 10px; cursor: pointer; font-size: 0.95rem; line-height: 1.4; color: var(--gold-light);">
+                    <input type="checkbox" id="forever-agreement" checked style="width: 18px; height: 18px; accent-color: var(--gold); margin-top: 2px;">
+                    <span>I hereby agree to remain best friends forever, go on chaotic trips, share secret updates, take polaroids, and never disappear. (Selfish twin soul clause applies 🫂💛)</span>
+                </label>
+            </div>
+
+            <!-- 3. TWIN TELEPATHY QUIZ -->
+            <div class="glass" id="telepathy-quiz" style="padding: 25px; border-radius: 12px; width: 100%; text-align: center;">
+                <h4 style="font-family: 'Playfair Display', serif; color: var(--gold); margin: 0 0 15px 0; font-size: 1.1rem; letter-spacing: 1px;">🔮 Twin Telepathy Test</h4>
+                <p id="quiz-question" style="font-size: 0.95rem; margin-bottom: 20px; color: var(--gold-light);">Our favorite twin soul memory is loading...</p>
+                <div style="display: flex; flex-direction: column; gap: 10px; align-items: center;" id="quiz-options">
+                    <!-- Dynamic choices will be injected here by JS -->
+                </div>
+                <p id="quiz-feedback" style="margin-top: 15px; font-size: 0.9rem; font-weight: 600; min-height: 20px;"></p>
+            </div>
 
             <!-- Badge -->
-            <div class="ending-badge" id="ending-badge">✨ 19 on 19 ✨</div>
+            <div class="ending-badge" id="ending-badge" style="margin-top: 20px;">✨ 19 on 19 ✨</div>
 
             <!-- Hearts -->
-            <div class="ending-hearts" aria-hidden="true">💛✨💛</div>
+            <div class="ending-hearts" aria-hidden="true" style="margin: 0;">💛✨💛</div>
         </div>
     </section>
 
