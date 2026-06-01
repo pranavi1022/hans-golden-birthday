@@ -26,19 +26,14 @@ const FIREBASE_CONFIG = {
 /* ----------------------------------------------------------
  * FALLBACK SAMPLE WISHES (shown when Firebase is not configured)
  * ---------------------------------------------------------- */
-const SAMPLE_WISHES = [
-  { name: "Pranavi", message: "Golden bday for my golden girl! Here's to us and all our memories 💛✨", timestamp: Date.now() - 100000 },
-  { name: "Vaish", message: "Happy birthday Hansss! Our trio is forever 🫂💖", timestamp: Date.now() - 80000 },
-  { name: "A Friend", message: "Wishing you the most golden year ahead! You deserve all the happiness in the world ✨🎂", timestamp: Date.now() - 50000 },
-  { name: "Your Twin Soul", message: "From 6th class to forever. No way back! Happy 19th 💛", timestamp: Date.now() - 20000 }
-];
+const SAMPLE_WISHES = [];
 
 /* ----------------------------------------------------------
  * LOCAL STORAGE HELPERS (to allow immediate combo testing without Firebase)
  * ---------------------------------------------------------- */
 function getLocalWishes() {
   try {
-    const wishesStr = localStorage.getItem('hans_birthday_local_wishes');
+    const wishesStr = localStorage.getItem('hans_bday_wishes_final');
     return wishesStr ? JSON.parse(wishesStr) : [];
   } catch (e) {
     console.error('[wishes.js] Error reading local wishes:', e);
@@ -54,7 +49,7 @@ function saveLocalWish(name, message) {
       message: message,
       timestamp: Date.now()
     });
-    localStorage.setItem('hans_birthday_local_wishes', JSON.stringify(localWishes));
+    localStorage.setItem('hans_bday_wishes_final', JSON.stringify(localWishes));
   } catch (e) {
     console.error('[wishes.js] Error saving local wish:', e);
   }
@@ -104,7 +99,7 @@ function initStickyNotes() {
 
     // Listen for cross-tab changes so the wall updates instantly!
     window.addEventListener('storage', function(e) {
-      if (e.key === 'hans_birthday_local_wishes') {
+      if (e.key === 'hans_bday_wishes_final') {
         renderLocalWishes();
       }
     });
