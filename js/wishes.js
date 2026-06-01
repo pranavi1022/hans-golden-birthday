@@ -91,10 +91,22 @@ function initStickyNotes() {
     });
   } else {
     // Firebase not configured — show sample wishes AND local storage wishes
-    const localWishes = getLocalWishes();
-    const allWishes = [...SAMPLE_WISHES, ...localWishes];
-    allWishes.forEach(function(wish) {
-      addStickyNote(grid, wish.name, wish.message);
+    const renderLocalWishes = function() {
+      grid.innerHTML = ''; // Clear existing notes to prevent duplicates
+      const localWishes = getLocalWishes();
+      const allWishes = [...SAMPLE_WISHES, ...localWishes];
+      allWishes.forEach(function(wish) {
+        addStickyNote(grid, wish.name, wish.message);
+      });
+    };
+
+    renderLocalWishes();
+
+    // Listen for cross-tab changes so the wall updates instantly!
+    window.addEventListener('storage', function(e) {
+      if (e.key === 'hans_birthday_local_wishes') {
+        renderLocalWishes();
+      }
     });
   }
 }
