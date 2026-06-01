@@ -34,6 +34,33 @@ const SAMPLE_WISHES = [
 ];
 
 /* ----------------------------------------------------------
+ * LOCAL STORAGE HELPERS (to allow immediate combo testing without Firebase)
+ * ---------------------------------------------------------- */
+function getLocalWishes() {
+  try {
+    const wishesStr = localStorage.getItem('hans_birthday_local_wishes');
+    return wishesStr ? JSON.parse(wishesStr) : [];
+  } catch (e) {
+    console.error('[wishes.js] Error reading local wishes:', e);
+    return [];
+  }
+}
+
+function saveLocalWish(name, message) {
+  try {
+    const localWishes = getLocalWishes();
+    localWishes.push({
+      name: name,
+      message: message,
+      timestamp: Date.now()
+    });
+    localStorage.setItem('hans_birthday_local_wishes', JSON.stringify(localWishes));
+  } catch (e) {
+    console.error('[wishes.js] Error saving local wish:', e);
+  }
+}
+
+/* ----------------------------------------------------------
  * CHECK IF FIREBASE IS CONFIGURED
  * ---------------------------------------------------------- */
 function isFirebaseConfigured() {
@@ -63,8 +90,10 @@ function initStickyNotes() {
       }
     });
   } else {
-    // Firebase not configured — show sample wishes
-    SAMPLE_WISHES.forEach(function(wish) {
+    // Firebase not configured — show sample wishes AND local storage wishes
+    const localWishes = getLocalWishes();
+    const allWishes = [...SAMPLE_WISHES, ...localWishes];
+    allWishes.forEach(function(wish) {
       addStickyNote(grid, wish.name, wish.message);
     });
   }
@@ -96,8 +125,9 @@ function addStickyNote(grid, name, message) {
 function submitWish(name, message) {
   return new Promise(function(resolve, reject) {
     if (!isFirebaseConfigured() || typeof firebase === 'undefined') {
-      // Demo mode — simulate success
-      console.log('[wishes.js] Demo mode — wish not saved:', { name: name, message: message });
+      // Demo mode — save to localStorage so it persists locally and displays on main page
+      saveLocalWish(name, message);
+      console.log('[wishes.js] Local storage mode — wish saved locally:', { name: name, message: message });
       resolve();
       return;
     }
