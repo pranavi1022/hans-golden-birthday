@@ -24,8 +24,8 @@ document.addEventListener('DOMContentLoaded', async () => {
      * 1.  FETCH DATA FILES
      * ---------------------------------------------------------- */
     const [messagesRes, letterRes] = await Promise.all([
-      fetch('data/messages.json?v=1.1'),
-      fetch('data/letter.txt?v=1.1')
+      fetch('data/messages.json?v=2.0'),
+      fetch('data/letter.txt?v=2.0')
     ]);
 
     if (!messagesRes.ok) throw new Error('Failed to load messages.json');
@@ -39,6 +39,7 @@ document.addEventListener('DOMContentLoaded', async () => {
      *     Every single piece of text comes from messages.json
      * ---------------------------------------------------------- */
     populateHero(data.hero);
+    populateStory(data.story);      // Our Story timeline
     populateBalloons(data.balloons);
     populateGallery(data.gallery);
     populateSlider(data.slider);
@@ -67,6 +68,11 @@ document.addEventListener('DOMContentLoaded', async () => {
     initLightbox();        // photo lightbox
     initScrollProgress();  // scroll progress bar
     initEnvelopeLetter();  // envelope opening animation
+
+    /* --- Update 2.0 modules --- */
+    initCountdown();       // hero countdown timer
+    initStory();           // story timeline scroll effects
+    initStickyNotes();     // sticky notes wall (Firebase/demo)
 
     /* Hide loading screen after everything is ready */
     setTimeout(hideLoading, 500);

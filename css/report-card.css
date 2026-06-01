@@ -1,0 +1,537 @@
+/* ============================================
+   REPORT-CARD.CSS — University of Friendship Transcript
+   A premium glassmorphism "report card" section
+   with gold grades, ornate borders & decorative seal
+   ============================================ */
+
+/* ============================================
+   Section Background
+   ============================================ */
+#report-card {
+  background: var(--dark-gradient);
+  padding: 100px 20px;
+  position: relative;
+}
+
+/* --- Subtle ambient glow behind the section --- */
+#report-card::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 600px;
+  height: 600px;
+  transform: translate(-50%, -50%);
+  background: radial-gradient(
+    circle,
+    rgba(212, 175, 55, 0.04) 0%,
+    transparent 70%
+  );
+  pointer-events: none;
+}
+
+/* ============================================
+   Report Card Container
+   Glassmorphism card with ornate double-gold border
+   ============================================ */
+.report-card-container {
+  max-width: 600px;
+  width: 90%;
+  margin: 0 auto;
+  padding: 50px 45px 55px;
+  position: relative;
+
+  /* --- Glassmorphism base --- */
+  background: rgba(255, 255, 255, 0.04);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-radius: 18px;
+
+  /* --- Ornate double gold border --- */
+  border: 3px double rgba(212, 175, 55, 0.55);
+  outline: 1px solid rgba(212, 175, 55, 0.15);
+  outline-offset: 6px;
+
+  /* --- Depth shadow --- */
+  box-shadow:
+    0 20px 60px rgba(0, 0, 0, 0.5),
+    0 0 40px rgba(212, 175, 55, 0.06),
+    inset 0 1px 0 rgba(212, 175, 55, 0.08);
+
+  overflow: hidden;
+}
+
+/* --- Paper-like texture via layered radial gradients --- */
+.report-card-container::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background:
+    radial-gradient(
+      ellipse at 20% 15%,
+      rgba(212, 175, 55, 0.06),
+      transparent 45%
+    ),
+    radial-gradient(
+      ellipse at 80% 85%,
+      rgba(212, 175, 55, 0.04),
+      transparent 45%
+    ),
+    radial-gradient(
+      ellipse at 50% 50%,
+      rgba(245, 230, 163, 0.02),
+      transparent 60%
+    ),
+    radial-gradient(
+      circle at 10% 90%,
+      rgba(184, 150, 12, 0.03),
+      transparent 40%
+    ),
+    radial-gradient(
+      circle at 90% 10%,
+      rgba(255, 215, 0, 0.025),
+      transparent 40%
+    );
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* --- Ensure all children sit above the texture --- */
+.report-card-container > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* ============================================
+   Header — "University of Friendship"
+   ============================================ */
+.rc-header {
+  font-family: 'Playfair Display', serif;
+  font-weight: 900;
+  font-size: clamp(1.6rem, 4vw, 2.2rem);
+  text-align: center;
+  margin-bottom: 6px;
+  letter-spacing: 1.5px;
+  line-height: 1.25;
+
+  /* --- Gold gradient text fill --- */
+  background: var(--gold-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+
+  /* --- Warm glow behind the text --- */
+  filter: drop-shadow(0 0 8px rgba(212, 175, 55, 0.3));
+}
+
+/* --- Decorative rule beneath header --- */
+.rc-header::after {
+  content: '';
+  display: block;
+  width: 100px;
+  height: 2px;
+  background: var(--gold-gradient);
+  margin: 14px auto 0;
+  border-radius: 2px;
+  opacity: 0.7;
+}
+
+/* ============================================
+   Subheader — "Official Transcript — Hans"
+   ============================================ */
+.rc-subheader {
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
+  font-size: clamp(0.85rem, 2vw, 1.05rem);
+  text-align: center;
+  color: var(--gold-light);
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  margin-bottom: 40px;
+  opacity: 0.85;
+}
+
+/* ============================================
+   Grade Rows
+   Subject on left · Grade on right
+   ============================================ */
+.rc-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 20px;
+  margin-bottom: 6px;
+  border-radius: 10px;
+  transition:
+    background 0.3s ease,
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
+  cursor: default;
+}
+
+/* --- Alternating micro-tint for depth --- */
+.rc-row:nth-child(even) {
+  background: rgba(255, 255, 255, 0.02);
+}
+
+/* --- Hover: subtle gold glow + slight lift --- */
+.rc-row:hover {
+  background: rgba(212, 175, 55, 0.07);
+  transform: scale(1.02);
+  box-shadow:
+    0 0 18px rgba(212, 175, 55, 0.12),
+    0 4px 14px rgba(0, 0, 0, 0.25);
+}
+
+/* --- Subject Name (left side) --- */
+.rc-subject {
+  font-family: 'Inter', sans-serif;
+  font-size: clamp(0.92rem, 2vw, 1.05rem);
+  color: var(--white-soft);
+  font-weight: 400;
+  letter-spacing: 0.5px;
+}
+
+/* --- Grade Value (right side) --- */
+.rc-grade {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1.1rem, 2.5vw, 1.35rem);
+  font-weight: 700;
+  color: var(--gold);
+  min-width: 55px;
+  text-align: right;
+  letter-spacing: 1px;
+
+  /* --- Gold text-shadow glow --- */
+  text-shadow:
+    0 0 6px rgba(212, 175, 55, 0.5),
+    0 0 14px rgba(255, 215, 0, 0.2);
+}
+
+/* --- Divider between grades section and verdict --- */
+.rc-divider {
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(212, 175, 55, 0.35),
+    transparent
+  );
+  margin: 20px 0;
+  border: none;
+}
+
+/* ============================================
+   Final Verdict Row
+   Larger, golden gradient background, standout
+   ============================================ */
+.rc-verdict {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 24px;
+  margin-top: 10px;
+  border-radius: 12px;
+  position: relative;
+  overflow: hidden;
+
+  /* --- Golden gradient background --- */
+  background: linear-gradient(
+    135deg,
+    rgba(212, 175, 55, 0.15),
+    rgba(255, 215, 0, 0.10),
+    rgba(184, 150, 12, 0.12)
+  );
+  border: 1px solid rgba(212, 175, 55, 0.3);
+  box-shadow:
+    0 0 20px rgba(212, 175, 55, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+
+/* --- Shimmer sweep across the verdict row --- */
+.rc-verdict::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 215, 0, 0.06),
+    transparent
+  );
+  animation: verdictShimmer 4s ease-in-out infinite;
+  pointer-events: none;
+}
+
+/* --- Verdict label (left) --- */
+.rc-verdict .rc-subject {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1rem, 2.5vw, 1.2rem);
+  font-weight: 700;
+  color: var(--gold-light);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+/* --- Verdict grade (right) — extra emphasis --- */
+.rc-verdict .rc-grade {
+  font-size: clamp(1.35rem, 3vw, 1.65rem);
+  color: var(--gold-shimmer);
+  text-shadow:
+    0 0 8px rgba(255, 215, 0, 0.6),
+    0 0 20px rgba(212, 175, 55, 0.3),
+    0 0 40px rgba(255, 215, 0, 0.1);
+}
+
+/* ============================================
+   Decorative Seal — Gold Circular Stamp
+   ============================================ */
+.rc-seal {
+  width: 80px;
+  height: 80px;
+  margin: 30px auto 0;
+  border-radius: 50%;
+  position: relative;
+
+  /* --- Gold gradient fill --- */
+  background: var(--gold-gradient);
+
+  /* --- Outer glow --- */
+  box-shadow:
+    0 0 20px rgba(212, 175, 55, 0.35),
+    0 0 50px rgba(212, 175, 55, 0.10),
+    inset 0 2px 4px rgba(255, 255, 255, 0.2);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+}
+
+/* --- Inner ring — gives a stamped/engraved feel --- */
+.rc-seal::before {
+  content: '';
+  position: absolute;
+  inset: 5px;
+  border-radius: 50%;
+  border: 2px solid rgba(0, 0, 0, 0.2);
+}
+
+/* --- Second decorative ring (outer notch) --- */
+.rc-seal::after {
+  content: '';
+  position: absolute;
+  inset: -4px;
+  border-radius: 50%;
+  border: 2px dashed rgba(212, 175, 55, 0.4);
+}
+
+/* ============================================
+   Decorative Corner Flourishes
+   ============================================ */
+.rc-corner {
+  position: absolute;
+  width: 50px;
+  height: 50px;
+  border: 2px solid rgba(212, 175, 55, 0.18);
+  z-index: 2;
+  pointer-events: none;
+}
+
+.rc-corner.top-left {
+  top: 12px;
+  left: 12px;
+  border-right: none;
+  border-bottom: none;
+}
+
+.rc-corner.top-right {
+  top: 12px;
+  right: 12px;
+  border-left: none;
+  border-bottom: none;
+}
+
+.rc-corner.bottom-left {
+  bottom: 12px;
+  left: 12px;
+  border-right: none;
+  border-top: none;
+}
+
+.rc-corner.bottom-right {
+  bottom: 12px;
+  right: 12px;
+  border-left: none;
+  border-top: none;
+}
+
+/* ============================================
+   Keyframes
+   ============================================ */
+
+/* --- Shimmer sweep on the verdict row --- */
+@keyframes verdictShimmer {
+  0%   { left: -100%; }
+  50%  { left: 100%; }
+  100% { left: 100%; }
+}
+
+/* --- Gentle pulse on the seal --- */
+@keyframes sealPulse {
+  0%, 100% {
+    box-shadow:
+      0 0 20px rgba(212, 175, 55, 0.35),
+      0 0 50px rgba(212, 175, 55, 0.10);
+  }
+  50% {
+    box-shadow:
+      0 0 28px rgba(212, 175, 55, 0.50),
+      0 0 60px rgba(212, 175, 55, 0.18);
+  }
+}
+
+.rc-seal {
+  animation: sealPulse 3s ease-in-out infinite;
+}
+
+/* ============================================
+   Responsive — Tablet (≤768px)
+   ============================================ */
+@media (max-width: 768px) {
+  #report-card {
+    padding: 70px 15px;
+  }
+
+  .report-card-container {
+    padding: 40px 30px 45px;
+    border-radius: 14px;
+  }
+
+  .rc-header::after {
+    width: 75px;
+  }
+
+  .rc-subheader {
+    letter-spacing: 2px;
+    margin-bottom: 30px;
+  }
+
+  .rc-row {
+    padding: 12px 16px;
+  }
+
+  .rc-verdict {
+    padding: 15px 18px;
+  }
+
+  .rc-seal {
+    width: 68px;
+    height: 68px;
+    font-size: 1.7rem;
+  }
+
+  .rc-corner {
+    width: 40px;
+    height: 40px;
+  }
+}
+
+/* ============================================
+   Responsive — Mobile (≤480px)
+   ============================================ */
+@media (max-width: 480px) {
+  #report-card {
+    padding: 50px 12px;
+  }
+
+  .report-card-container {
+    padding: 30px 20px 35px;
+    width: 95%;
+    border-radius: 12px;
+    outline-offset: 4px;
+  }
+
+  .rc-header {
+    letter-spacing: 0.5px;
+  }
+
+  .rc-header::after {
+    width: 60px;
+    margin-top: 10px;
+  }
+
+  .rc-subheader {
+    font-size: 0.78rem;
+    letter-spacing: 1.5px;
+    margin-bottom: 24px;
+  }
+
+  .rc-row {
+    padding: 10px 12px;
+    margin-bottom: 4px;
+    border-radius: 8px;
+  }
+
+  .rc-row:hover {
+    transform: scale(1.01);
+  }
+
+  .rc-grade {
+    min-width: 45px;
+  }
+
+  .rc-verdict {
+    padding: 14px 16px;
+    border-radius: 10px;
+  }
+
+  .rc-seal {
+    width: 58px;
+    height: 58px;
+    font-size: 1.4rem;
+    margin-top: 24px;
+  }
+
+  .rc-corner {
+    width: 30px;
+    height: 30px;
+  }
+
+  .rc-corner.top-left     { top: 8px;    left: 8px; }
+  .rc-corner.top-right    { top: 8px;    right: 8px; }
+  .rc-corner.bottom-left  { bottom: 8px; left: 8px; }
+  .rc-corner.bottom-right { bottom: 8px; right: 8px; }
+}
+
+/* ============================================
+   Responsive — Small Mobile (≤360px)
+   ============================================ */
+@media (max-width: 360px) {
+  .report-card-container {
+    padding: 24px 16px 28px;
+  }
+
+  .rc-subject {
+    font-size: 0.85rem;
+  }
+
+  .rc-grade {
+    font-size: 1rem;
+    min-width: 40px;
+  }
+
+  .rc-verdict .rc-grade {
+    font-size: 1.15rem;
+  }
+
+  .rc-seal {
+    width: 50px;
+    height: 50px;
+    font-size: 1.2rem;
+  }
+}

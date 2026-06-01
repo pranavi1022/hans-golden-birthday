@@ -1,4 +1,50 @@
 {
+  "story": {
+    "heading": "Our Story 💛",
+    "chapters": [
+      {
+        "number": 1,
+        "title": "The Familiar Face",
+        "content": "First day of B.Tech. I was sent from Section A to Section C and, after a lot of confusion, finally landed in Section B. Sitting in the front bench, I looked back and saw a familiar face I hadn\u2019t seen in years\u2014Hansi, my friend from Lotus Lap Public School. A small wave became the beginning of everything."
+      },
+      {
+        "number": 2,
+        "title": "Taking The Empty Seat",
+        "content": "I almost stayed where I was. Walking across the classroom felt impossible for an introvert like me. But that day I stood up, walked over, and sat beside her. Looking back, it was one of the best decisions I ever made."
+      },
+      {
+        "number": 3,
+        "title": "The Trio Is Born",
+        "content": "One ordinary lunch break changed everything. Vaish joined us, conversations became longer, laughter became louder, and before we knew it, our trio had been formed."
+      },
+      {
+        "number": 4,
+        "title": "Notes, Assignments & Rescues",
+        "content": "If I missed notes, she wrote them. If I was sleepy, she quietly continued my classwork. Assignments, records, and last-minute submissions somehow always found a way to get done because we helped each other through it all."
+      },
+      {
+        "number": 5,
+        "title": "Our Favorite Spot",
+        "content": "Among all the places on campus, we claimed one spot as ours. Whether it was skipping boring lectures, having deep conversations, or just sitting in comfortable silence\u2014that little corner knew all our secrets. Every memory of college feels incomplete without it.",
+        "image": "assets/images/story/trio.jpeg"
+      },
+      {
+        "number": 6,
+        "title": "The Soda Obsession",
+        "content": "If there\u2019s one thing that defines Hans, it\u2019s her undying love for soda. Not coffee, not tea, not juice\u2014SODA. Every canteen trip, every outing, every celebration\u2014the first thing she\u2019d order was always the same. Some things are just eternal."
+      },
+      {
+        "number": 7,
+        "title": "Through Thick & Thin",
+        "content": "Not every day was sunshine and laughter. There were hard days too\u2014exam stress, misunderstandings, moments of doubt. But we always found our way back to each other. That\u2019s what makes us different. We don\u2019t just exist together\u2014we choose each other, every single time."
+      },
+      {
+        "number": 8,
+        "title": "Golden Forever",
+        "content": "From 6th class strangers to B.Tech best friends. From Lotus Lap to Section B. From one small wave to a lifetime of memories. This isn\u2019t just a friendship\u2014it\u2019s a forever agreement. No way back. Happy Golden Birthday, Hansss. Here\u2019s to us. \ud83d\udc9b\u2728"
+      }
+    ]
+  },
   "hero": {
     "title": "HAPPY GOLDEN BIRTHDAY TO MY HANSSS 💛✨",
     "subtitle": "My Twin Soul",

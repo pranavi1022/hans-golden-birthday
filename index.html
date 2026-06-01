@@ -28,6 +28,11 @@
     <link rel="stylesheet" href="css/lightbox.css?v=1.1">
     <link rel="stylesheet" href="css/cursor.css?v=1.1">
     <link rel="stylesheet" href="css/scrollbar.css?v=1.1">
+    <!-- Update 2.0 styles -->
+    <link rel="stylesheet" href="css/countdown.css?v=2.0">
+    <link rel="stylesheet" href="css/story.css?v=2.0">
+    <link rel="stylesheet" href="css/report-card.css?v=2.0">
+    <link rel="stylesheet" href="css/sticky-notes.css?v=2.0">
 </head>
 <body>
 
@@ -88,11 +93,42 @@
 
             <!-- Golden badge -->
             <div class="hero-badge">✨ 19 on 19 ✨</div>
+
+            <!-- Countdown Timer -->
+            <div id="countdown-timer" class="countdown-container">
+                <div class="countdown-box">
+                    <span class="countdown-number" id="countdown-days">00</span>
+                    <span class="countdown-label">Days</span>
+                </div>
+                <div class="countdown-box">
+                    <span class="countdown-number" id="countdown-hours">00</span>
+                    <span class="countdown-label">Hours</span>
+                </div>
+                <div class="countdown-box">
+                    <span class="countdown-number" id="countdown-minutes">00</span>
+                    <span class="countdown-label">Minutes</span>
+                </div>
+                <div class="countdown-box">
+                    <span class="countdown-number" id="countdown-seconds">00</span>
+                    <span class="countdown-label">Seconds</span>
+                </div>
+            </div>
         </div>
 
         <!-- Scroll indicator -->
         <div class="hero-scroll-indicator" aria-hidden="true">
             <span></span>
+        </div>
+    </section>
+
+    <!-- ============================================ -->
+    <!-- SECTION 1.5: OUR STORY                       -->
+    <!-- Vertical timeline with 8 chapters             -->
+    <!-- ============================================ -->
+    <section id="story" class="section">
+        <h2 class="section-title reveal" id="story-heading">Our Story 💛</h2>
+        <div class="story-timeline" id="story-timeline">
+            <!-- Chapters are dynamically inserted by story.js -->
         </div>
     </section>
 
@@ -201,6 +237,65 @@
             <!-- Labels -->
             <span class="slider-label then-label" id="then-label">Then 📚</span>
             <span class="slider-label now-label" id="now-label">Now 🎓</span>
+        </div>
+    </section>
+
+    <!-- ============================================ -->
+    <!-- SECTION 4.5: FRIENDSHIP REPORT CARD          -->
+    <!-- University of Friendship transcript           -->
+    <!-- ============================================ -->
+    <section id="report-card" class="section">
+        <h2 class="section-title reveal">🎓 University of Friendship</h2>
+
+        <div class="report-card-container reveal">
+            <!-- Decorative corners -->
+            <div class="rc-corner rc-corner-tl" aria-hidden="true"></div>
+            <div class="rc-corner rc-corner-tr" aria-hidden="true"></div>
+            <div class="rc-corner rc-corner-bl" aria-hidden="true"></div>
+            <div class="rc-corner rc-corner-br" aria-hidden="true"></div>
+
+            <!-- Header -->
+            <h3 class="rc-header">University of Friendship</h3>
+            <p class="rc-subheader">Official Transcript — Hans</p>
+
+            <!-- Decorative seal -->
+            <div class="rc-seal" aria-hidden="true">💛</div>
+
+            <!-- Grade rows -->
+            <div class="rc-row">
+                <span class="rc-subject">Kindness</span>
+                <span class="rc-grade">A+</span>
+            </div>
+            <div class="rc-row">
+                <span class="rc-subject">Loyalty</span>
+                <span class="rc-grade">O</span>
+            </div>
+            <div class="rc-row">
+                <span class="rc-subject">Humor</span>
+                <span class="rc-grade">A++</span>
+            </div>
+            <div class="rc-row">
+                <span class="rc-subject">Study Buddy</span>
+                <span class="rc-grade">S</span>
+            </div>
+            <div class="rc-row">
+                <span class="rc-subject">Curd Hating</span>
+                <span class="rc-grade">O+++</span>
+            </div>
+            <div class="rc-row">
+                <span class="rc-subject">Assignment Rescue Skills</span>
+                <span class="rc-grade">A++</span>
+            </div>
+            <div class="rc-row">
+                <span class="rc-subject">Being Hans</span>
+                <span class="rc-grade">∞</span>
+            </div>
+
+            <!-- Final verdict -->
+            <div class="rc-verdict">
+                <span class="rc-subject">Final Verdict</span>
+                <span class="rc-grade">Promoted to Best Friend Forever 💛</span>
+            </div>
         </div>
     </section>
 
@@ -345,6 +440,18 @@
     </section>
 
     <!-- ============================================ -->
+    <!-- SECTION 8: STICKY NOTES WALL                 -->
+    <!-- Dynamic wishes from friends                   -->
+    <!-- ============================================ -->
+    <section id="sticky-notes" class="section">
+        <h2 class="section-title reveal">💌 Sticky Notes Wall</h2>
+        <p class="sticky-notes-subtitle reveal">Notes left by people who love you.</p>
+        <div class="sticky-notes-grid" id="sticky-notes-grid">
+            <!-- Notes are dynamically inserted by wishes.js -->
+        </div>
+    </section>
+
+    <!-- ============================================ -->
     <!-- LIGHTBOX (fullscreen photo viewer)           -->
     <!-- ============================================ -->
     <div id="lightbox" class="lightbox">
@@ -368,8 +475,15 @@
     <!-- New feature modules -->
     <script src="js/cursor.js?v=1.1"></script>
     <script src="js/lightbox.js?v=1.1"></script>
+    <!-- Update 2.0 modules -->
+    <script src="js/countdown.js?v=2.0"></script>
+    <script src="js/story.js?v=2.0"></script>
+    <!-- Firebase SDK (compat) for wishes -->
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+    <script src="js/wishes.js?v=2.0"></script>
     <!-- Main app (must load last — initializes everything) -->
-    <script src="js/main.js?v=1.1"></script>
+    <script src="js/main.js?v=2.0"></script>
 
 </body>
 </html>

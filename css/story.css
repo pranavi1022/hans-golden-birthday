@@ -1,0 +1,671 @@
+/* ============================================
+   STORY.CSS — "Our Story" Vertical Timeline
+   Premium alternating timeline with glassmorphism
+   cards, gold accents, and scroll-reveal chapters
+   ============================================ */
+
+/* ============================================
+   Section Background
+   ============================================ */
+#story {
+  background: var(--dark-gradient);
+  padding: 120px 20px;
+  position: relative;
+}
+
+/* --- Subtle radial glow behind the timeline --- */
+#story::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle, rgba(212, 175, 55, 0.04) 0%, transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ============================================
+   Timeline Container
+   ============================================ */
+.story-timeline {
+  position: relative;
+  max-width: 1100px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 40px 0;
+  z-index: 1;
+}
+
+/* --- Vertical gold center line --- */
+.story-timeline::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 2px;
+  background: linear-gradient(
+    180deg,
+    transparent 0%,
+    var(--gold-dark) 5%,
+    var(--gold) 50%,
+    var(--gold-dark) 95%,
+    transparent 100%
+  );
+  z-index: 0;
+}
+
+/* ============================================
+   Story Chapter — Base Card
+   ============================================ */
+.story-chapter {
+  position: relative;
+  width: 45%;
+  padding: 0;
+  margin-bottom: 80px;
+  z-index: 1;
+}
+
+/* --- Last chapter: remove bottom margin --- */
+.story-chapter:last-child {
+  margin-bottom: 0;
+}
+
+/* ============================================
+   Alternating Layout (Desktop)
+   Odd chapters: LEFT side  |  Even chapters: RIGHT side
+   ============================================ */
+
+/* --- Odd chapters sit on the left --- */
+.story-chapter:nth-child(odd) {
+  margin-left: 0;
+  margin-right: auto;
+  text-align: right;
+}
+
+/* --- Even chapters sit on the right --- */
+.story-chapter:nth-child(even) {
+  margin-left: auto;
+  margin-right: 0;
+  text-align: left;
+}
+
+/* ============================================
+   Chapter Number — Gold Circle on Timeline
+   ============================================ */
+.chapter-number {
+  position: absolute;
+  top: 20px;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: var(--gold-gradient);
+  color: var(--black);
+  font-family: 'Playfair Display', serif;
+  font-size: 1.2rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 3;
+  box-shadow:
+    0 0 20px rgba(212, 175, 55, 0.4),
+    0 0 40px rgba(212, 175, 55, 0.15);
+  border: 3px solid var(--black);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* --- Odd chapters: number on the right edge (towards center line) --- */
+.story-chapter:nth-child(odd) .chapter-number {
+  right: -74px;
+}
+
+/* --- Even chapters: number on the left edge (towards center line) --- */
+.story-chapter:nth-child(even) .chapter-number {
+  left: -74px;
+}
+
+/* --- Hover: enlarge the number circle --- */
+.story-chapter:hover .chapter-number {
+  transform: scale(1.15);
+  box-shadow:
+    0 0 30px rgba(212, 175, 55, 0.6),
+    0 0 60px rgba(212, 175, 55, 0.2);
+}
+
+/* ============================================
+   Golden Dot Pulse Animation on Timeline Nodes
+   ============================================ */
+
+/* --- Pulsing ring behind each chapter-number --- */
+.chapter-number::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: rgba(212, 175, 55, 0.3);
+  animation: dotPulse 2.5s ease-in-out infinite;
+  z-index: -1;
+}
+
+/* --- Stagger pulse animation per chapter --- */
+.story-chapter:nth-child(1) .chapter-number::before {
+  animation-delay: 0s;
+}
+
+.story-chapter:nth-child(2) .chapter-number::before {
+  animation-delay: 0.4s;
+}
+
+.story-chapter:nth-child(3) .chapter-number::before {
+  animation-delay: 0.8s;
+}
+
+.story-chapter:nth-child(4) .chapter-number::before {
+  animation-delay: 1.2s;
+}
+
+.story-chapter:nth-child(5) .chapter-number::before {
+  animation-delay: 1.6s;
+}
+
+.story-chapter:nth-child(6) .chapter-number::before {
+  animation-delay: 2.0s;
+}
+
+/* --- Pulse keyframes --- */
+@keyframes dotPulse {
+  0%, 100% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 0.4;
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(1.8);
+    opacity: 0;
+  }
+}
+
+/* ============================================
+   Connector Arm — Horizontal line from card to node
+   ============================================ */
+.story-chapter::before {
+  content: '';
+  position: absolute;
+  top: 40px;
+  width: 26px;
+  height: 2px;
+  background: var(--gold);
+  opacity: 0.5;
+  z-index: 1;
+}
+
+/* --- Odd chapters: connector extends to the right --- */
+.story-chapter:nth-child(odd)::before {
+  right: -50px;
+}
+
+/* --- Even chapters: connector extends to the left --- */
+.story-chapter:nth-child(even)::before {
+  left: -50px;
+}
+
+/* ============================================
+   Glassmorphism Card Body
+   ============================================ */
+.chapter-content {
+  background: rgba(255, 255, 255, 0.04);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(212, 175, 55, 0.2);
+  border-radius: 16px;
+  padding: 30px;
+  transition: all 0.4s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+/* --- Inner shimmer sweep on hover --- */
+.chapter-content::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(212, 175, 55, 0.06),
+    transparent
+  );
+  transition: left 0.6s ease;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.story-chapter:hover .chapter-content::before {
+  left: 100%;
+}
+
+/* --- Hover: lift + gold glow --- */
+.story-chapter:hover .chapter-content {
+  transform: translateY(-6px);
+  border-color: rgba(212, 175, 55, 0.5);
+  box-shadow:
+    0 12px 40px rgba(0, 0, 0, 0.4),
+    0 0 30px rgba(212, 175, 55, 0.12);
+}
+
+/* ============================================
+   Chapter Title
+   ============================================ */
+.chapter-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1.2rem, 2.5vw, 1.6rem);
+  color: var(--gold);
+  margin-bottom: 12px;
+  line-height: 1.3;
+  position: relative;
+  z-index: 1;
+}
+
+/* --- Gold accent underline --- */
+.chapter-title::after {
+  content: '';
+  display: block;
+  width: 40px;
+  height: 2px;
+  background: var(--gold-gradient);
+  margin-top: 10px;
+  border-radius: 1px;
+  transition: width 0.3s ease;
+}
+
+/* --- Odd chapters: align underline to right --- */
+.story-chapter:nth-child(odd) .chapter-title::after {
+  margin-left: auto;
+}
+
+/* --- Even chapters: align underline to left --- */
+.story-chapter:nth-child(even) .chapter-title::after {
+  margin-right: auto;
+}
+
+/* --- Hover: expand the underline --- */
+.story-chapter:hover .chapter-title::after {
+  width: 60px;
+}
+
+/* ============================================
+   Chapter Body Text
+   ============================================ */
+.chapter-content p {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.95rem;
+  color: var(--white-soft);
+  line-height: 1.75;
+  position: relative;
+  z-index: 1;
+}
+
+/* ============================================
+   Chapter Photo — Polaroid-Style Frame (Chapter 5)
+   ============================================ */
+.chapter-photo {
+  margin-top: 20px;
+  background: var(--white);
+  padding: 8px 8px 30px 8px;
+  border-radius: 4px;
+  box-shadow:
+    0 4px 20px rgba(0, 0, 0, 0.4),
+    0 0 15px rgba(212, 175, 55, 0.1);
+  display: inline-block;
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+  position: relative;
+  z-index: 1;
+  transform: rotate(-1.5deg);
+}
+
+/* --- Photo image --- */
+.chapter-photo img {
+  width: 100%;
+  max-width: 280px;
+  height: auto;
+  display: block;
+  border-radius: 2px;
+  object-fit: cover;
+}
+
+/* --- Tape strip across the top of the polaroid --- */
+.chapter-photo::before {
+  content: '';
+  position: absolute;
+  top: -6px;
+  left: 50%;
+  transform: translateX(-50%) rotate(2deg);
+  width: 50px;
+  height: 16px;
+  background: rgba(212, 175, 55, 0.35);
+  border-radius: 2px;
+  z-index: 5;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+}
+
+/* --- Caption area below the photo --- */
+.chapter-photo figcaption,
+.chapter-photo .photo-caption {
+  font-family: 'Dancing Script', cursive;
+  font-size: 0.85rem;
+  color: #555;
+  text-align: center;
+  margin-top: 6px;
+  padding: 0 4px;
+}
+
+/* --- Hover: straighten and glow --- */
+.story-chapter:hover .chapter-photo {
+  transform: rotate(0deg) scale(1.03);
+  box-shadow:
+    0 8px 30px rgba(0, 0, 0, 0.5),
+    0 0 25px rgba(212, 175, 55, 0.2);
+}
+
+/* ============================================
+   Scroll Reveal — Staggered Animation Delays
+   ============================================ */
+
+/* --- Base reveal is defined in index.css --- */
+/* --- Stagger each chapter's entrance for a cascading effect --- */
+
+.story-chapter.reveal:nth-child(1) {
+  transition-delay: 0s;
+}
+
+.story-chapter.reveal:nth-child(2) {
+  transition-delay: 0.15s;
+}
+
+.story-chapter.reveal:nth-child(3) {
+  transition-delay: 0.3s;
+}
+
+.story-chapter.reveal:nth-child(4) {
+  transition-delay: 0.45s;
+}
+
+.story-chapter.reveal:nth-child(5) {
+  transition-delay: 0.6s;
+}
+
+.story-chapter.reveal:nth-child(6) {
+  transition-delay: 0.75s;
+}
+
+.story-chapter.reveal:nth-child(7) {
+  transition-delay: 0.9s;
+}
+
+.story-chapter.reveal:nth-child(8) {
+  transition-delay: 1.05s;
+}
+
+/* --- Directional entrance: odd from left, even from right --- */
+.story-chapter.reveal:nth-child(odd) {
+  transform: translateX(-50px) translateY(40px);
+}
+
+.story-chapter.reveal:nth-child(even) {
+  transform: translateX(50px) translateY(40px);
+}
+
+/* --- Active state: reset transforms --- */
+.story-chapter.reveal.active {
+  opacity: 1;
+  transform: translateX(0) translateY(0);
+}
+
+/* ============================================
+   Timeline End Cap — Decorative gold dot
+   ============================================ */
+.story-timeline::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--gold-gradient);
+  box-shadow: 0 0 15px rgba(212, 175, 55, 0.5);
+  z-index: 2;
+}
+
+/* ============================================
+   Responsive — Tablet (≤ 900px)
+   ============================================ */
+@media (max-width: 900px) {
+  #story {
+    padding: 100px 20px;
+  }
+
+  .story-chapter {
+    width: 42%;
+    margin-bottom: 60px;
+  }
+
+  .chapter-content {
+    padding: 24px;
+  }
+
+  .chapter-number {
+    width: 42px;
+    height: 42px;
+    font-size: 1.05rem;
+  }
+
+  .chapter-number::before {
+    width: 42px;
+    height: 42px;
+  }
+
+  .story-chapter:nth-child(odd) .chapter-number {
+    right: -66px;
+  }
+
+  .story-chapter:nth-child(even) .chapter-number {
+    left: -66px;
+  }
+
+  .story-chapter:nth-child(odd)::before {
+    right: -44px;
+    width: 22px;
+  }
+
+  .story-chapter:nth-child(even)::before {
+    left: -44px;
+    width: 22px;
+  }
+}
+
+/* ============================================
+   Responsive — Mobile (≤ 768px)
+   Single-column layout, all chapters on the right
+   ============================================ */
+@media (max-width: 768px) {
+  #story {
+    padding: 80px 15px;
+  }
+
+  /* --- Move timeline line to the left edge --- */
+  .story-timeline::before {
+    left: 24px;
+    transform: none;
+  }
+
+  /* --- End cap follows the line --- */
+  .story-timeline::after {
+    left: 24px;
+    transform: translateX(-50%);
+  }
+
+  /* --- All chapters on the right, full width --- */
+  .story-chapter {
+    width: calc(100% - 60px);
+    margin-left: 60px !important;
+    margin-right: 0 !important;
+    text-align: left !important;
+    margin-bottom: 50px;
+  }
+
+  /* --- Number circles sit on the left line --- */
+  .story-chapter:nth-child(odd) .chapter-number,
+  .story-chapter:nth-child(even) .chapter-number {
+    left: -60px;
+    right: auto;
+    width: 40px;
+    height: 40px;
+    font-size: 1rem;
+  }
+
+  .story-chapter:nth-child(odd) .chapter-number::before,
+  .story-chapter:nth-child(even) .chapter-number::before {
+    width: 40px;
+    height: 40px;
+  }
+
+  /* --- Connector arms all extend from the left --- */
+  .story-chapter:nth-child(odd)::before,
+  .story-chapter:nth-child(even)::before {
+    left: -20px;
+    right: auto;
+    width: 18px;
+  }
+
+  /* --- All title underlines align left --- */
+  .story-chapter:nth-child(odd) .chapter-title::after {
+    margin-left: 0;
+    margin-right: auto;
+  }
+
+  /* --- Both odd and even enter from the left on mobile --- */
+  .story-chapter.reveal:nth-child(odd),
+  .story-chapter.reveal:nth-child(even) {
+    transform: translateX(-30px) translateY(30px);
+  }
+
+  .story-chapter.reveal.active {
+    transform: translateX(0) translateY(0);
+  }
+
+  .chapter-content {
+    padding: 22px 18px;
+  }
+
+  .chapter-title {
+    font-size: 1.15rem;
+  }
+
+  .chapter-content p {
+    font-size: 0.9rem;
+  }
+
+  /* --- Polaroid scales down --- */
+  .chapter-photo {
+    padding: 6px 6px 24px 6px;
+  }
+
+  .chapter-photo img {
+    max-width: 220px;
+  }
+}
+
+/* ============================================
+   Responsive — Small Mobile (≤ 480px)
+   ============================================ */
+@media (max-width: 480px) {
+  #story {
+    padding: 60px 12px;
+  }
+
+  .story-timeline {
+    padding: 20px 0;
+  }
+
+  .story-timeline::before {
+    left: 18px;
+  }
+
+  .story-timeline::after {
+    left: 18px;
+    width: 10px;
+    height: 10px;
+  }
+
+  .story-chapter {
+    width: calc(100% - 48px);
+    margin-left: 48px !important;
+    margin-bottom: 40px;
+  }
+
+  .story-chapter:nth-child(odd) .chapter-number,
+  .story-chapter:nth-child(even) .chapter-number {
+    left: -48px;
+    width: 34px;
+    height: 34px;
+    font-size: 0.9rem;
+    border-width: 2px;
+  }
+
+  .story-chapter:nth-child(odd) .chapter-number::before,
+  .story-chapter:nth-child(even) .chapter-number::before {
+    width: 34px;
+    height: 34px;
+  }
+
+  .story-chapter:nth-child(odd)::before,
+  .story-chapter:nth-child(even)::before {
+    left: -14px;
+    width: 12px;
+  }
+
+  .chapter-content {
+    padding: 18px 14px;
+    border-radius: 12px;
+  }
+
+  .chapter-title {
+    font-size: 1.05rem;
+  }
+
+  .chapter-content p {
+    font-size: 0.85rem;
+    line-height: 1.65;
+  }
+
+  .chapter-photo {
+    padding: 5px 5px 20px 5px;
+  }
+
+  .chapter-photo img {
+    max-width: 180px;
+  }
+
+  .chapter-photo::before {
+    width: 40px;
+    height: 12px;
+  }
+
+  .chapter-photo figcaption,
+  .chapter-photo .photo-caption {
+    font-size: 0.75rem;
+  }
+}

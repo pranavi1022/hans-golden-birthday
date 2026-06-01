@@ -1,0 +1,134 @@
+/* ============================================
+   COUNTDOWN.CSS — Countdown Timer Styles
+   A luxurious golden countdown timer for the hero section
+   ============================================ */
+
+.countdown-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  margin-top: 30px;
+  animation: fadeInUp 1.5s ease-out 1.2s forwards;
+  opacity: 0;
+}
+
+.countdown-box {
+  background: rgba(26, 26, 26, 0.6);
+  border: 1px solid rgba(212, 175, 55, 0.25);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  padding: 15px;
+  border-radius: 12px;
+  min-width: 90px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.4);
+  transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.countdown-box::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -50%;
+  width: 200%;
+  height: 100%;
+  background: linear-gradient(
+    to right,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.05) 50%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  transform: skewX(-25deg);
+  transition: 0.75s;
+  pointer-events: none;
+}
+
+.countdown-box:hover::before {
+  left: 120%;
+}
+
+.countdown-box:hover {
+  transform: translateY(-5px);
+  border-color: var(--gold);
+  box-shadow: 0 10px 25px rgba(212, 175, 55, 0.2);
+}
+
+.countdown-number {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2rem, 4vw, 2.8rem);
+  font-weight: 800;
+  color: var(--gold-shimmer);
+  text-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
+  line-height: 1;
+  margin-bottom: 5px;
+}
+
+.countdown-label {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  color: var(--gold-light);
+  letter-spacing: 2px;
+  font-weight: 500;
+}
+
+/* Celebrating Message Styling */
+.countdown-celebration {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1.2rem, 3vw, 2.2rem);
+  font-weight: bold;
+  background: var(--gold-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  color: transparent;
+  text-shadow: 0 0 15px rgba(212, 175, 55, 0.3);
+  margin-top: 30px;
+  letter-spacing: 3px;
+  animation: fadeInUp 1.5s ease-out 1.2s forwards, pulseGlow 2s infinite ease-in-out;
+  opacity: 0;
+}
+
+@keyframes pulseGlow {
+  0%, 100% {
+    text-shadow: 0 0 15px rgba(212, 175, 55, 0.3);
+    transform: scale(1);
+  }
+  50% {
+    text-shadow: 0 0 25px rgba(212, 175, 55, 0.6);
+    transform: scale(1.03);
+  }
+}
+
+/* Responsive adjustments */
+@media (max-width: 480px) {
+  .countdown-container {
+    gap: 10px;
+    margin-top: 25px;
+    flex-wrap: wrap;
+    max-width: 250px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  
+  .countdown-box {
+    min-width: 75px;
+    padding: 10px;
+    flex: 1 1 calc(50% - 10px);
+  }
+  
+  .countdown-number {
+    font-size: 1.8rem;
+  }
+  
+  .countdown-label {
+    font-size: 0.65rem;
+    letter-spacing: 1px;
+  }
+}

@@ -1,0 +1,469 @@
+/* ============================================
+   WISHES-PAGE.CSS — Standalone Wishes Form
+   Full-page dark background, glassmorphism card
+   ============================================ */
+
+/* --- Google Fonts (same as main site) --- */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Playfair+Display:wght@400;700;900&display=swap');
+
+/* ============================================
+   CSS Custom Properties (mirrors index.css)
+   ============================================ */
+:root {
+  /* --- Gold Palette --- */
+  --gold: #D4AF37;
+  --gold-light: #F5E6A3;
+  --gold-dark: #B8960C;
+  --gold-shimmer: #FFD700;
+
+  /* --- Dark Palette --- */
+  --black: #0A0A0A;
+  --black-light: #1A1A1A;
+  --black-medium: #2A2A2A;
+
+  /* --- Light Palette --- */
+  --white: #FFFFFF;
+  --white-soft: rgba(255, 255, 255, 0.9);
+
+  /* --- Gradients --- */
+  --gold-gradient: linear-gradient(135deg, #D4AF37, #FFD700, #B8960C);
+  --dark-gradient: linear-gradient(180deg, #0A0A0A, #1A1A1A);
+}
+
+/* ============================================
+   Base Page Reset
+   ============================================ */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--dark-gradient);
+  font-family: 'Inter', sans-serif;
+  color: var(--white);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  padding: 40px 20px;
+  position: relative;
+  overflow-x: hidden;
+}
+
+/* --- Subtle background sparkle texture --- */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background:
+    radial-gradient(1px 1px at 15% 25%, rgba(212, 175, 55, 0.15), transparent),
+    radial-gradient(1px 1px at 85% 70%, rgba(212, 175, 55, 0.1), transparent),
+    radial-gradient(1px 1px at 50% 10%, rgba(255, 215, 0, 0.08), transparent),
+    radial-gradient(1px 1px at 30% 80%, rgba(245, 230, 163, 0.06), transparent);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* --- Text selection --- */
+::selection {
+  background: var(--gold);
+  color: var(--black);
+}
+
+/* ============================================
+   Glassmorphism Form Card
+   ============================================ */
+.wishes-form-card {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 500px;
+  background: rgba(255, 255, 255, 0.04);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(212, 175, 55, 0.3);
+  border-radius: 20px;
+  padding: 48px 36px;
+  box-shadow:
+    0 8px 40px rgba(0, 0, 0, 0.5),
+    0 0 60px rgba(212, 175, 55, 0.06),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  animation: cardFadeIn 0.8s ease forwards;
+}
+
+/* --- Decorative gold corner accents --- */
+.wishes-form-card::before,
+.wishes-form-card::after {
+  content: '';
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  border-color: var(--gold);
+  border-style: solid;
+  opacity: 0.4;
+  pointer-events: none;
+}
+
+.wishes-form-card::before {
+  top: 12px;
+  left: 12px;
+  border-width: 2px 0 0 2px;
+  border-radius: 4px 0 0 0;
+}
+
+.wishes-form-card::after {
+  bottom: 12px;
+  right: 12px;
+  border-width: 0 2px 2px 0;
+  border-radius: 0 0 4px 0;
+}
+
+/* ============================================
+   Form Title
+   ============================================ */
+.wishes-form-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1.6rem, 4.5vw, 2.2rem);
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 8px;
+  background: var(--gold-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ============================================
+   Form Labels
+   ============================================ */
+.wishes-label {
+  display: block;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--gold-light);
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-bottom: 8px;
+  margin-top: 24px;
+}
+
+/* --- First label needs no top margin --- */
+.wishes-label:first-of-type {
+  margin-top: 32px;
+}
+
+/* ============================================
+   Input Fields
+   ============================================ */
+.wishes-input {
+  width: 100%;
+  padding: 14px 16px;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.95rem;
+  color: var(--white);
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 10px;
+  outline: none;
+  transition: border-color 0.3s ease,
+              box-shadow 0.3s ease,
+              background 0.3s ease;
+}
+
+.wishes-input::placeholder {
+  color: rgba(255, 255, 255, 0.3);
+}
+
+/* --- Focus: gold border + subtle glow --- */
+.wishes-input:focus {
+  border-color: var(--gold);
+  background: rgba(255, 255, 255, 0.08);
+  box-shadow: 0 0 16px rgba(212, 175, 55, 0.15);
+}
+
+/* ============================================
+   Textarea
+   ============================================ */
+.wishes-textarea {
+  width: 100%;
+  min-height: 120px;
+  padding: 14px 16px;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.95rem;
+  color: var(--white);
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 10px;
+  outline: none;
+  resize: vertical;
+  line-height: 1.6;
+  transition: border-color 0.3s ease,
+              box-shadow 0.3s ease,
+              background 0.3s ease;
+}
+
+.wishes-textarea::placeholder {
+  color: rgba(255, 255, 255, 0.3);
+}
+
+/* --- Focus: gold border + subtle glow --- */
+.wishes-textarea:focus {
+  border-color: var(--gold);
+  background: rgba(255, 255, 255, 0.08);
+  box-shadow: 0 0 16px rgba(212, 175, 55, 0.15);
+}
+
+/* ============================================
+   Submit Button
+   ============================================ */
+.wishes-submit {
+  display: block;
+  width: 100%;
+  margin-top: 32px;
+  padding: 16px 24px;
+  font-family: 'Playfair Display', serif;
+  font-size: 1.05rem;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  color: var(--black);
+  background: var(--gold-gradient);
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.3s ease,
+              box-shadow 0.3s ease,
+              filter 0.3s ease;
+}
+
+/* --- Shimmer sweep on hover --- */
+.wishes-submit::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    120deg,
+    transparent 30%,
+    rgba(255, 255, 255, 0.3) 50%,
+    transparent 70%
+  );
+  transition: left 0.6s ease;
+}
+
+.wishes-submit:hover::before {
+  left: 100%;
+}
+
+/* --- Hover: lift + golden glow --- */
+.wishes-submit:hover {
+  transform: translateY(-2px);
+  box-shadow:
+    0 6px 24px rgba(212, 175, 55, 0.4),
+    0 0 40px rgba(255, 215, 0, 0.15);
+}
+
+/* --- Active press --- */
+.wishes-submit:active {
+  transform: translateY(0);
+  filter: brightness(0.92);
+}
+
+/* --- Disabled state --- */
+.wishes-submit:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+/* ============================================
+   Success State (after submit)
+   ============================================ */
+.wishes-success {
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 40px 20px;
+}
+
+/* --- Visible state --- */
+.wishes-success.visible {
+  display: flex;
+  animation: successFadeIn 0.6s ease forwards;
+}
+
+/* --- Animated checkmark circle --- */
+.wishes-success::before {
+  content: '✓';
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  border: 3px solid var(--gold);
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--gold);
+  margin-bottom: 20px;
+  animation: checkPop 0.5s 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+/* --- Success heading --- */
+.wishes-success h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.5rem;
+  color: var(--gold);
+  margin-bottom: 8px;
+}
+
+/* --- Success body text --- */
+.wishes-success p {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.95rem;
+  color: var(--gold-light);
+  opacity: 0.85;
+  line-height: 1.5;
+}
+
+/* ============================================
+   Keyframes
+   ============================================ */
+
+/* --- Card entrance --- */
+@keyframes cardFadeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(30px) scale(0.96);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* --- Success container entrance --- */
+@keyframes successFadeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* --- Checkmark pop-in --- */
+@keyframes checkPop {
+  0% {
+    opacity: 0;
+    transform: scale(0);
+  }
+  60% {
+    transform: scale(1.2);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* ============================================
+   Responsive — Tablet (≤ 768px)
+   ============================================ */
+@media (max-width: 768px) {
+  body {
+    padding: 30px 16px;
+  }
+
+  .wishes-form-card {
+    padding: 40px 28px;
+    border-radius: 16px;
+  }
+
+  .wishes-form-title {
+    font-size: clamp(1.4rem, 5vw, 1.8rem);
+  }
+
+  .wishes-submit {
+    padding: 14px 20px;
+    font-size: 1rem;
+  }
+}
+
+/* ============================================
+   Responsive — Mobile (≤ 480px)
+   ============================================ */
+@media (max-width: 480px) {
+  body {
+    padding: 20px 12px;
+  }
+
+  .wishes-form-card {
+    padding: 32px 20px;
+    border-radius: 14px;
+  }
+
+  .wishes-form-card::before,
+  .wishes-form-card::after {
+    width: 28px;
+    height: 28px;
+  }
+
+  .wishes-form-title {
+    font-size: clamp(1.25rem, 6vw, 1.6rem);
+  }
+
+  .wishes-label {
+    font-size: 0.7rem;
+    letter-spacing: 1.5px;
+  }
+
+  .wishes-input,
+  .wishes-textarea {
+    padding: 12px 14px;
+    font-size: 0.9rem;
+  }
+
+  .wishes-textarea {
+    min-height: 100px;
+  }
+
+  .wishes-submit {
+    padding: 13px 18px;
+    font-size: 0.95rem;
+    margin-top: 24px;
+  }
+
+  .wishes-success::before {
+    width: 52px;
+    height: 52px;
+    font-size: 1.4rem;
+  }
+
+  .wishes-success h3 {
+    font-size: 1.25rem;
+  }
+
+  .wishes-success p {
+    font-size: 0.88rem;
+  }
+}
