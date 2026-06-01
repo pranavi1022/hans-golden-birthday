@@ -125,6 +125,11 @@
   display: block;
 }
 
+/* --- Special case for Growing Up picture 3 to show the face --- */
+.gallery-item img[src*="growing-up/3"] {
+  object-position: top center;
+}
+
 /* ============================================
    Gallery Placeholder (when no image loaded)
    ============================================ */

@@ -546,3 +546,38 @@ body::before {
     font-size: 0.88rem;
   }
 }
+
+/* ============================================
+   Floating Particles Background
+   ============================================ */
+.wishes-particles {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.wish-particle {
+  position: absolute;
+  top: -10%;
+  animation: floatDown linear infinite;
+  z-index: 0;
+}
+
+@keyframes floatDown {
+  0% {
+    transform: translateY(-10vh) rotate(0deg);
+    opacity: 0;
+  }
+  10% {
+    opacity: 0.8;
+  }
+  90% {
+    opacity: 0.8;
+  }
+  100% {
+    transform: translateY(110vh) rotate(360deg);
+    opacity: 0;
+  }
+}
