@@ -52,12 +52,6 @@
   /* --- Drop-in entrance (initially hidden) --- */
   opacity: 0;
   animation: stickyDropIn 0.6s ease forwards;
-  animation-play-state: paused;          /* JS / .active triggers play */
-}
-
-/* --- Play animation when parent section is revealed --- */
-.reveal.active .sticky-note {
-  animation-play-state: running;
 }
 
 /* ============================================
