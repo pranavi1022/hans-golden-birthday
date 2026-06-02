@@ -1,123 +1,113 @@
 /* ============================================
-   WISHES.JS — Firebase Integration for
-   Sticky Notes Wall & Wishes Submission
+   WISHES.JS — Supabase Cloud Database
+   Real shared guestbook for Hans's Birthday
+   Every device sees the same wishes.
    ============================================ */
 
 /* ----------------------------------------------------------
- * FIREBASE CONFIGURATION
- * Replace these values with your Firebase project config.
- * To set up:
- *   1. Go to https://console.firebase.google.com
- *   2. Create a new project (e.g. "hans-birthday-wishes")
- *   3. Go to Realtime Database → Create Database (test mode)
- *   4. Go to Project Settings → General → Your apps → Add web app
- *   5. Copy the config values below
+ * SUPABASE CONFIGURATION
  * ---------------------------------------------------------- */
-const FIREBASE_CONFIG = {
-  apiKey: "",
-  authDomain: "",
-  databaseURL: "",
-  projectId: "",
-  storageBucket: "",
-  messagingSenderId: "",
-  appId: ""
-};
+const SUPABASE_URL = 'https://untmjodetdtlpnqjgmvd.supabase.co';
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVudG1qb2RldGR0bHBucWpnbXZkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODA0MDI0MDEsImV4cCI6MjA5NTk3ODQwMX0.fHHrO8B7iVi2ZbX5jP0ZOw6aBzETsaEAaDICjm6FXtw';
 
 /* ----------------------------------------------------------
- * FALLBACK SAMPLE WISHES (shown when Firebase is not configured)
+ * SUPABASE REST API HELPERS
  * ---------------------------------------------------------- */
-const SAMPLE_WISHES = [];
 
-/* ----------------------------------------------------------
- * LOCAL STORAGE HELPERS (to allow immediate combo testing without Firebase)
- * ---------------------------------------------------------- */
-function getLocalWishes() {
+/**
+ * Fetch all wishes from the Supabase database.
+ * Returns an array of { name, message, created_at }.
+ */
+async function fetchWishes() {
   try {
-    const wishesStr = localStorage.getItem('hans_bday_wishes_final');
-    return wishesStr ? JSON.parse(wishesStr) : [];
-  } catch (e) {
-    console.error('[wishes.js] Error reading local wishes:', e);
+    const res = await fetch(SUPABASE_URL + '/rest/v1/wishes?select=id,name,message,created_at&order=created_at.asc', {
+      method: 'GET',
+      headers: {
+        'apikey': SUPABASE_ANON_KEY,
+        'Authorization': 'Bearer ' + SUPABASE_ANON_KEY
+      }
+    });
+    if (!res.ok) {
+      console.error('[wishes.js] Fetch error:', res.status, await res.text());
+      return [];
+    }
+    return await res.json();
+  } catch (err) {
+    console.error('[wishes.js] Network error fetching wishes:', err);
     return [];
   }
 }
 
-function saveLocalWish(name, message) {
+/**
+ * Insert a new wish into the Supabase database.
+ * Returns true on success, false on failure.
+ */
+async function insertWish(name, message) {
   try {
-    const localWishes = getLocalWishes();
-    localWishes.push({
-      name: name,
-      message: message,
-      timestamp: Date.now()
+    const res = await fetch(SUPABASE_URL + '/rest/v1/wishes', {
+      method: 'POST',
+      headers: {
+        'apikey': SUPABASE_ANON_KEY,
+        'Authorization': 'Bearer ' + SUPABASE_ANON_KEY,
+        'Content-Type': 'application/json',
+        'Prefer': 'return=minimal'
+      },
+      body: JSON.stringify({ name: name, message: message })
     });
-    localStorage.setItem('hans_bday_wishes_final', JSON.stringify(localWishes));
-  } catch (e) {
-    console.error('[wishes.js] Error saving local wish:', e);
+    if (!res.ok) {
+      console.error('[wishes.js] Insert error:', res.status, await res.text());
+      return false;
+    }
+    return true;
+  } catch (err) {
+    console.error('[wishes.js] Network error inserting wish:', err);
+    return false;
   }
 }
 
 /* ----------------------------------------------------------
- * CHECK IF FIREBASE IS CONFIGURED
- * ---------------------------------------------------------- */
-function isFirebaseConfigured() {
-  return FIREBASE_CONFIG.databaseURL && FIREBASE_CONFIG.databaseURL.length > 0;
-}
-
-/* ----------------------------------------------------------
  * INITIALIZE STICKY NOTES WALL (Main Birthday Page)
+ * Fetches wishes from the cloud database and renders them.
+ * Auto-refreshes every 15 seconds so new wishes appear.
  * ---------------------------------------------------------- */
 function initStickyNotes() {
   const grid = document.getElementById('sticky-notes-grid');
   if (!grid) return;
 
-  if (isFirebaseConfigured() && typeof firebase !== 'undefined') {
-    // Initialize Firebase if not already done
-    if (!firebase.apps.length) {
-      firebase.initializeApp(FIREBASE_CONFIG);
-    }
-    const db = firebase.database();
-    const wishesRef = db.ref('wishes');
+  let lastKnownCount = 0;
 
-    // Listen for wishes in real-time
-    wishesRef.orderByChild('timestamp').on('child_added', function(snapshot) {
-      const wish = snapshot.val();
-      if (wish && wish.name && wish.message) {
-        addStickyNote(grid, wish.name, wish.message);
-      }
-    });
-  } else {
-    // Firebase not configured — show sample wishes AND local storage wishes
-    const renderLocalWishes = function() {
-      grid.innerHTML = ''; // Clear existing notes to prevent duplicates
-      const localWishes = getLocalWishes();
-      const allWishes = [...SAMPLE_WISHES, ...localWishes];
-      allWishes.forEach(function(wish) {
+  async function renderWishes() {
+    const wishes = await fetchWishes();
+
+    // Only re-render if there are new wishes (prevents flickering)
+    if (wishes.length !== lastKnownCount) {
+      grid.innerHTML = '';
+      wishes.forEach(function(wish) {
         addStickyNote(grid, wish.name, wish.message);
       });
-    };
-
-    renderLocalWishes();
-
-    // Listen for cross-tab changes so the wall updates instantly!
-    window.addEventListener('storage', function(e) {
-      if (e.key === 'hans_bday_wishes_final') {
-        renderLocalWishes();
-      }
-    });
+      lastKnownCount = wishes.length;
+    }
   }
+
+  // Initial load
+  renderWishes();
+
+  // Auto-refresh every 15 seconds for real-time feel
+  setInterval(renderWishes, 15000);
 }
 
 /* ----------------------------------------------------------
  * ADD A STICKY NOTE TO THE GRID
  * ---------------------------------------------------------- */
 function addStickyNote(grid, name, message) {
-  const note = document.createElement('div');
-  note.className = 'sticky-note reveal';
+  var note = document.createElement('div');
+  note.className = 'sticky-note';
 
-  const nameEl = document.createElement('div');
+  var nameEl = document.createElement('div');
   nameEl.className = 'sticky-note-name';
   nameEl.textContent = name;
 
-  const msgEl = document.createElement('div');
+  var msgEl = document.createElement('div');
   msgEl.className = 'sticky-note-message';
   msgEl.textContent = message;
 
@@ -128,29 +118,12 @@ function addStickyNote(grid, name, message) {
 
 /* ----------------------------------------------------------
  * SUBMIT A WISH (Wishes Page Only)
+ * Saves the wish to the Supabase cloud database.
  * ---------------------------------------------------------- */
 function submitWish(name, message) {
-  return new Promise(function(resolve, reject) {
-    if (!isFirebaseConfigured() || typeof firebase === 'undefined') {
-      // Demo mode — save to localStorage so it persists locally and displays on main page
-      saveLocalWish(name, message);
-      console.log('[wishes.js] Local storage mode — wish saved locally:', { name: name, message: message });
-      resolve();
-      return;
+  return insertWish(name, message).then(function(success) {
+    if (!success) {
+      throw new Error('Failed to save wish to the database.');
     }
-
-    if (!firebase.apps.length) {
-      firebase.initializeApp(FIREBASE_CONFIG);
-    }
-    const db = firebase.database();
-    const wishesRef = db.ref('wishes');
-
-    wishesRef.push({
-      name: name,
-      message: message,
-      timestamp: Date.now()
-    })
-    .then(function() { resolve(); })
-    .catch(function(err) { reject(err); });
   });
 }
