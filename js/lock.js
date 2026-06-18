@@ -30,14 +30,10 @@ document.addEventListener('DOMContentLoaded', () => {
                     lockContainer.style.display = 'none';
                 }, 500);
 
-                // Start background music automatically!
+                // Show background music player
                 const musicPlayer = document.getElementById('music-player');
                 if(musicPlayer) {
                     musicPlayer.style.display = 'flex';
-                    const musicBtn = document.getElementById('music-player-btn');
-                    if (musicBtn && musicBtn.textContent.includes('🔇')) {
-                        musicBtn.click(); // This starts the music!
-                    }
                 }
             } else {
                 // ERROR

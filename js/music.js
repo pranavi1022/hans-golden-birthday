@@ -51,31 +51,4 @@ function initMusic() {
     }
   });
 
-  // Try to autoplay on load
-  async function attemptAutoplay() {
-    if (isPlaying) return;
-    try {
-      await audio.play();
-      isPlaying = true;
-      btn.classList.add('playing');
-      btn.textContent = '🔊';
-      if (titleEl) titleEl.textContent = 'Playing: Our Golden Memories 🎵';
-    } catch (err) {
-      console.warn('[music] Autoplay blocked by browser. Waiting for user interaction.');
-      // Force UI to look like it's ON and playing
-      isPlaying = true; 
-      btn.classList.add('playing');
-      btn.textContent = '🔊';
-      if (titleEl) titleEl.textContent = 'Playing: Our Golden Memories 🎵';
-      
-      // Play immediately on the first user click anywhere
-      document.body.addEventListener('click', function firstClickPlay() {
-        audio.play().catch(e => console.log('Still blocked:', e));
-        document.body.removeEventListener('click', firstClickPlay);
-      }, { once: true });
-    }
-  }
-
-  // Small delay to ensure everything is loaded before attempting
-  setTimeout(attemptAutoplay, 1000);
 }
