@@ -62,11 +62,15 @@ function initMusic() {
       if (titleEl) titleEl.textContent = 'Playing: Our Golden Memories 🎵';
     } catch (err) {
       console.warn('[music] Autoplay blocked by browser. Waiting for user interaction.');
-      // If blocked, play on the very first click anywhere on the document
+      // Force UI to look like it's ON and playing
+      isPlaying = true; 
+      btn.classList.add('playing');
+      btn.textContent = '🔊';
+      if (titleEl) titleEl.textContent = 'Playing: Our Golden Memories 🎵';
+      
+      // Play immediately on the first user click anywhere
       document.body.addEventListener('click', function firstClickPlay() {
-        if (!isPlaying) {
-          attemptAutoplay();
-        }
+        audio.play().catch(e => console.log('Still blocked:', e));
         document.body.removeEventListener('click', firstClickPlay);
       }, { once: true });
     }
