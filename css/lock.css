@@ -1,0 +1,93 @@
+/* ============================================
+   LOCK SCREEN MODE
+   Locks the website to the hero section until unlocked
+   ============================================ */
+
+body.locked-mode {
+    overflow: hidden !important; /* Prevent scrolling */
+}
+
+/* Hide all sections except hero and loading screen */
+body.locked-mode section:not(#hero) {
+    display: none !important;
+}
+
+body.locked-mode #scroll-progress {
+    display: none !important; /* Hide scrollbar while locked */
+}
+
+/* Lock Container Styling */
+.website-lock-container {
+    margin-top: 30px;
+    background: rgba(20, 20, 20, 0.6);
+    border: 1px solid rgba(212, 175, 55, 0.3);
+    border-radius: 16px;
+    padding: 25px;
+    max-width: 450px;
+    margin-left: auto;
+    margin-right: auto;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    animation: fadeIn 1s ease 1s forwards;
+    opacity: 0;
+    text-align: center;
+}
+
+.lock-message {
+    font-family: 'Playfair Display', serif;
+    color: var(--gold);
+    font-size: 1.1rem;
+    line-height: 1.5;
+    margin-bottom: 20px;
+}
+
+.lock-input-group {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+}
+
+.lock-input-group input {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(212, 175, 55, 0.5);
+    border-radius: 8px;
+    padding: 12px 15px;
+    color: #FFF;
+    text-align: center;
+    font-size: 1rem;
+    width: 60%;
+    outline: none;
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.lock-input-group input:focus {
+    border-color: var(--gold);
+    box-shadow: 0 0 10px rgba(212, 175, 55, 0.3);
+}
+
+.lock-input-group button {
+    background: var(--gold-gradient);
+    border: none;
+    border-radius: 8px;
+    color: #000;
+    font-weight: 600;
+    padding: 12px 20px;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.lock-input-group button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(212, 175, 55, 0.4);
+}
+
+.lock-error {
+    color: #ff4d4d;
+    font-size: 0.9rem;
+    margin-top: 10px;
+    margin-bottom: 0;
+    opacity: 0;
+    transition: opacity 0.3s;
+    height: 18px;
+}

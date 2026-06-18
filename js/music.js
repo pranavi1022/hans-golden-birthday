@@ -50,4 +50,28 @@ function initMusic() {
       if (titleEl) titleEl.textContent = 'Paused 🎵';
     }
   });
+
+  // Try to autoplay on load
+  async function attemptAutoplay() {
+    if (isPlaying) return;
+    try {
+      await audio.play();
+      isPlaying = true;
+      btn.classList.add('playing');
+      btn.textContent = '🔊';
+      if (titleEl) titleEl.textContent = 'Playing: Our Golden Memories 🎵';
+    } catch (err) {
+      console.warn('[music] Autoplay blocked by browser. Waiting for user interaction.');
+      // If blocked, play on the very first click anywhere on the document
+      document.body.addEventListener('click', function firstClickPlay() {
+        if (!isPlaying) {
+          attemptAutoplay();
+        }
+        document.body.removeEventListener('click', firstClickPlay);
+      }, { once: true });
+    }
+  }
+
+  // Small delay to ensure everything is loaded before attempting
+  setTimeout(attemptAutoplay, 1000);
 }

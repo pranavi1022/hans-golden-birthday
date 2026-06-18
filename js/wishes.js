@@ -94,6 +94,31 @@ function initStickyNotes() {
 
   // Auto-refresh every 15 seconds for real-time feel
   setInterval(renderWishes, 15000);
+
+  // Easter Egg Toggle for specific friends
+  const trigger = document.getElementById('sticky-notes-secret-trigger');
+  if (trigger) {
+    let secretsRevealed = false;
+    trigger.addEventListener('click', () => {
+      secretsRevealed = !secretsRevealed;
+      
+      // Pop animation on emoji
+      trigger.style.transform = 'scale(1.3)';
+      setTimeout(() => trigger.style.transform = 'scale(1)', 200);
+
+      const secretNotes = grid.querySelectorAll('.secret-wish');
+      secretNotes.forEach(note => {
+        note.style.display = secretsRevealed ? 'block' : 'none';
+        if (secretsRevealed) {
+          note.style.animation = 'scaleIn 0.5s ease-out forwards';
+        }
+      });
+
+      if (secretsRevealed && typeof playSoundEffect === 'function') {
+        playSoundEffect('assets/music/correct.mp3');
+      }
+    });
+  }
 }
 
 /* ----------------------------------------------------------
@@ -102,6 +127,13 @@ function initStickyNotes() {
 function addStickyNote(grid, name, message) {
   var note = document.createElement('div');
   note.className = 'sticky-note';
+
+  // Check if it's a secret wish
+  const n = (name || '').toLowerCase().trim();
+  if (n === 'yashwanth' || n === 'supreeth' || n === 'sri') {
+    note.classList.add('secret-wish');
+    note.style.display = 'none'; // hidden by default
+  }
 
   var nameEl = document.createElement('div');
   nameEl.className = 'sticky-note-name';

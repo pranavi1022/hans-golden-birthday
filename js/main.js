@@ -240,7 +240,7 @@ function populateGallery(gallery) {
     /* --- Category title --- */
     const catTitle = document.createElement('h3');
     catTitle.classList.add('category-title');
-    catTitle.textContent = (cat.emoji ? cat.emoji + ' ' : '') + (cat.name || 'Gallery');
+    catTitle.innerHTML = (cat.emoji ? `<span class="secret-trigger" style="cursor: pointer; display: inline-block;">${cat.emoji}</span> ` : '') + (cat.name || 'Gallery');
     catDiv.appendChild(catTitle);
 
     /* --- Image grid inside category --- */
@@ -272,6 +272,48 @@ function populateGallery(gallery) {
       item.appendChild(image);
       imagesDiv.appendChild(item);
     });
+
+    // --- SECRET EASTER EGG ---
+    if (cat.name === "The Golden Girl Now") {
+      const trigger = catTitle.querySelector('.secret-trigger');
+      if (trigger) {
+        let isRevealed = false;
+        
+        // Create the hidden image element once
+        const hiddenItem = document.createElement('div');
+        hiddenItem.classList.add('gallery-item');
+        hiddenItem.style.animation = 'scaleIn 0.5s ease-out forwards';
+        hiddenItem.style.border = '2px solid var(--gold)'; 
+        hiddenItem.style.boxShadow = '0 0 20px rgba(212, 175, 55, 0.5)';
+
+        const hiddenImage = document.createElement('img');
+        hiddenImage.src = 'assets/images/current/1.jpeg';
+        hiddenImage.alt = 'Secret Photo';
+        hiddenImage.loading = 'lazy';
+        hiddenItem.appendChild(hiddenImage);
+
+        trigger.addEventListener('click', () => {
+          // Pop effect for the emoji itself
+          trigger.style.transform = 'scale(1.5)';
+          setTimeout(() => trigger.style.transform = 'scale(1)', 200);
+
+          if (!isRevealed) {
+            isRevealed = true;
+            // Reveal it
+            imagesDiv.insertBefore(hiddenItem, imagesDiv.firstChild);
+            if (typeof playSoundEffect === 'function') {
+              playSoundEffect('assets/music/correct.mp3'); 
+            }
+          } else {
+            isRevealed = false;
+            // Hide it again
+            if (imagesDiv.contains(hiddenItem)) {
+              imagesDiv.removeChild(hiddenItem);
+            }
+          }
+        });
+      }
+    }
 
     catDiv.appendChild(imagesDiv);
     container.appendChild(catDiv);
