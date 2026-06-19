@@ -4,14 +4,21 @@
    ============================================ */
 
 document.addEventListener('DOMContentLoaded', () => {
-    // 1. Enable locked mode immediately on load
-    document.body.classList.add('locked-mode');
+    // 🎂 IT'S HER BIRTHDAY! Lock is disabled — site is fully open now.
+    // document.body.classList.add('locked-mode');
 
-    // 2. Setup the unlock button logic
+    // Hide the lock UI — not needed today!
+    const lockContainer = document.getElementById('website-lock-container');
+    if (lockContainer) lockContainer.style.display = 'none';
+
+    // Show music player immediately (no unlock needed)
+    const musicPlayer = document.getElementById('music-player');
+    if (musicPlayer) musicPlayer.style.display = 'flex';
+
+    // 2. Setup the unlock button logic (kept for reference)
     const unlockBtn = document.getElementById('website-unlock-btn');
     const passcodeInput = document.getElementById('website-passcode');
     const errorMsg = document.getElementById('website-lock-error');
-    const lockContainer = document.getElementById('website-lock-container');
 
     // The secret passcode!
     const SECRET_PASSCODE = 'triosol'; 
