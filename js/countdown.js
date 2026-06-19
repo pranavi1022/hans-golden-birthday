@@ -16,13 +16,16 @@ function initCountdown() {
   const minutesEl = document.getElementById('countdown-minutes');
   const secondsEl = document.getElementById('countdown-seconds');
 
+  // Declare BEFORE updateTimer so clearInterval doesn't crash
+  let timerInterval;
+
   function updateTimer() {
     const now = new Date().getTime();
     const distance = targetDate - now;
 
     // If the countdown is finished, display celebration text
     if (distance < 0) {
-      clearInterval(timerInterval);
+      if (timerInterval) clearInterval(timerInterval);
       container.innerHTML = `
         <div class="countdown-celebration">
           🎉 HAPPY GOLDEN BIRTHDAY, HANSSS! 💛✨
@@ -46,5 +49,5 @@ function initCountdown() {
 
   // Initial call and set interval
   updateTimer();
-  const timerInterval = setInterval(updateTimer, 1000);
+  timerInterval = setInterval(updateTimer, 1000);
 }
